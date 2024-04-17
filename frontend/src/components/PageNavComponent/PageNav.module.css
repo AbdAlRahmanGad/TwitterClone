@@ -1,0 +1,50 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #000000;
+  color: #fff;
+  padding-top: 2rem;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.nav .logo {
+  align-self: start;
+  width: 45px;
+  fill: white;
+  margin-left: 38px;
+}
+.nav ul {
+  display: flex;
+  flex-direction: column;
+}
+.nav ul li {
+}
+.nav ul a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: end;
+  gap: 0.5rem;
+  border-radius: 46px;
+  padding: 1rem 2rem;
+  width: fit-content;
+}
+.nav ul a:hover{
+  background-color: #1f2021;
+}
+:global(.active){
+  font-weight: bold;
+}
+.nav ul svg {
+  width: 35px;
+  fill: white;
+}
+.nav ul a span {
+  font-size: 24px;
+}
+@media (max-width: 1200px) {
+  .nav ul a span {
+    display: none;
+  }
+}
