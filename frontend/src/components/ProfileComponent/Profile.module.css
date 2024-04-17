@@ -1,0 +1,82 @@
+.profile {
+  background-color: black;
+  flex: 1;
+}
+.profileHeader {
+  background-color: #121314;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.5rem 1rem;
+}
+.profileHeader svg {
+  fill: white;
+  width: 35px;
+}
+.profileHeader a {
+  border-radius: 50%;
+  padding: 10px;
+}
+.profileHeader a:hover {
+  background-color: #1f2021;
+}
+
+.profileHeader a {
+  color: white;
+  font-size: 22px;
+}
+.username {
+  font-size: 27px;
+  color: white;
+}
+.profileHeader .username {
+  margin-top: 1.5rem;
+}
+.subTitle,
+.connections span {
+  color: #71767b;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+/*  */
+.hero .backgroundCover {
+  background-image: url("./../../assets/img-1.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 200px;
+}
+.hero .userInfo {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.hero .profilePicture {
+  --size: 180px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  border: 1px solid black;
+  /* translate: 0 -50% ; */
+  margin-top: calc(0px - var(--size) / 2);
+}
+.hero .username {
+  margin-top: 35px;
+}
+.hero .subTitle {
+}
+.hero .date {
+  margin-top: 35px;
+}
+.connections {
+  margin-top: 1rem;
+}
+.connections span {
+  margin-right: 1rem;
+}
+
+
+ .connections span strong {
+  color: white;
+}
