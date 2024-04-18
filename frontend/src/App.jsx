@@ -12,6 +12,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="profile" element={<ProfilePage />}></Route>
+          <Route
+            path="profile_with_replies"
+            element={<ProfilePage showReplies={true} />}
+          ></Route>
           {/* <Route path="pricing" element={<Pricing />}></Route> */}
         </Routes>
       </BrowserRouter>
