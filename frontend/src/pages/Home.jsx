@@ -1,13 +1,11 @@
-/* eslint-disable react/prop-types */
 import PageNav from "../components/PageNavComponent/PageNav";
-import Profile from "../components/ProfileComponent/Profile";
 import Suggestions from "../components/SuggestionsComponent/Suggestions";
 
-export default function ProfilePage({ showReplies }) {
+export default function Home() {
   return (
     <main className="main">
       <PageNav />
-      <Profile showReplies={showReplies} />
+      <h1>Hello world</h1>
       <Suggestions />
     </main>
   );
