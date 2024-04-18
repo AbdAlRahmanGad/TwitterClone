@@ -1,0 +1,29 @@
+.post{
+    color: white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding-bottom: 2rem;
+}
+.userInfo{
+    padding-top: 1.5rem ;
+    padding-bottom: 1.5rem;
+
+    display: flex;
+    align-items: start;
+}
+.userInfo img{
+    border-radius: 50%;
+    width: 44px;
+
+}
+.userInfo span{
+    margin-left: 10px;
+    display: inline-block;
+    color: #71767b;
+    font-size: 22px;
+}
+
+
+.content{
+
+}
