@@ -29,11 +29,12 @@
   border-radius: 46px;
   padding: 1rem 2rem;
   width: fit-content;
+  transition: background-color 0.3s ease-in-out;
 }
-.nav ul a:hover{
+.nav ul a:hover {
   background-color: #1f2021;
 }
-:global(.active){
+:global(.active) {
   font-weight: bold;
 }
 .nav ul svg {
