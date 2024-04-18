@@ -23,6 +23,9 @@ body {
 ul {
   list-style: none;
 }
+a {
+  text-decoration: none;
+}
 .main > * {
   /* width: 100%; */
 }
