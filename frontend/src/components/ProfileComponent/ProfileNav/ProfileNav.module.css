@@ -1,0 +1,22 @@
+.nav {
+    display: flex;
+    margin-top: 2rem;
+    border-bottom: 1px solid white;
+    align-items: center;
+    text-align: center;
+}
+.tab {
+    flex: 1;
+    font-size: 22px;
+    color: white;
+    border-bottom: 5px solid transparent;
+    padding: 1rem 0;
+    transition: background-color .3s ease-in-out;
+
+}
+.tab:hover {
+    background-color:#1f2021;
+}
+:global(.active) {
+    border-bottom-color: #1d9bf0;
+}
