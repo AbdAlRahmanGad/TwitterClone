@@ -1,71 +1,83 @@
-CREATE TABLE Following (
-    user_name TEXT NOT NULL,
-    following_id TEXT NOT NULL,
-    PRIMARY KEY (user_name, following_id)
+CREATE TABLE twitter_user
+(
+    user_name character varying(32) NOT NULL,
+    bio character varying(255) DEFAULT '',
+    cover_pic bytea DEFAULT NULL,
+    profile_pic bytea DEFAULT NULL,
+    first_name character varying(40) NOT NULL,
+    last_name character varying(40) NOT NULL,
+    date_joined date NOT NULL DEFAULT CURRENT_DATE,
+    PRIMARY KEY (user_name)
 );
 
-CREATE TABLE Followers (
-    user_name TEXT NOT NULL,
-    follower_id TEXT NOT NULL,
-    PRIMARY KEY (user_name, follower_id)
+CREATE TABLE followers
+(
+    user_name   varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    follower_id varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    PRIMARY KEY (follower_id,
+                 user_name)
 );
 
-
-CREATE TABLE User (
-    user_name TEXT PRIMARY KEY,
-    first_name TEXT NOT NULL,
-    last_name TEXT NOT NULL,
-    bio TEXT DEFAULT '',
-    profile_pic BLOB DEFAULT NULL,
-    cover_pic BLOB DEFAULT NULL,
-    date_joined DATE DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE following
+(
+    user_name    varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    following_id varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    PRIMARY KEY (following_id,
+                 user_name)
 );
 
-CREATE TABLE Blocks (
-    blocker_id TEXT NOT NULL,
-    blocked_id TEXT NOT NULL,
-    PRIMARY KEY (blocker_id, blocked_id)
+CREATE TABLE mutes
+(
+    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    muted_id  varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    PRIMARY KEY (muted_id,
+                 user_name)
 );
 
-CREATE TABLE Mutes (
-    user_name TEXT NOT NULL,
-    muted_id TEXT NOT NULL,
-    PRIMARY KEY (user_name, muted_id)
+CREATE TABLE blocks
+(
+    blocked_id varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    blocker_id varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    PRIMARY KEY (blocked_id,
+                 blocker_id)
 );
 
-CREATE TABLE Likes (
-    tweet_id INTEGER NOT NULL,
-    username TEXT NOT NULL,
-    date_liked DATE DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (tweet_id, username)
+CREATE TABLE tweets
+(
+    id serial NOT NULL,
+    date_tweeted timestamp DEFAULT LOCALTIMESTAMP(0),
+    parent_id integer DEFAULT -1,
+    author_id varchar(32) NOT NULL,
+    content varchar(255) DEFAULT '',
+    media bytea DEFAULT NULL,
+    bookmarks_number integer DEFAULT 0,
+    replies_number integer DEFAULT 0,
+    repost_number integer DEFAULT 0,
+    likes_number integer DEFAULT 0,
+    is_repost boolean DEFAULT FALSE,
+    original_post integer DEFAULT NULL,
+    PRIMARY KEY (id)
 );
-
-CREATE TABLE Bookmarks (
-    tweet_id INTEGER NOT NULL,
-    username TEXT NOT NULL,
-    date_bookmarked DATE DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (tweet_id, username)
+CREATE TABLE likes
+(
+    tweet_id   integer NOT NULL REFERENCES tweets (id),
+    username   varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    date_liked timestamp DEFAULT LOCALTIMESTAMP(0),
+    PRIMARY KEY (tweet_id,
+                 username)
 );
-
-CREATE TABLE Tweets (
-    id INTEGER PRIMARY KEY,
-    date_tweeted DATE DEFAULT CURRENT_TIMESTAMP,
-    author_id TEXT NOT NULL,
-    parent_id INTEGER DEFAULT -1,
-    content TEXT DEFAULT '',
-    media BLOB DEFAULT NULL,
-    bookmarks_number INTEGER DEFAULT 0,
-    replies_number INTEGER DEFAULT 0,
-    likes_number INTEGER DEFAULT 0,
-    repost_number INTEGER DEFAULT 0,
-    is_repost BOOLEAN DEFAULT FALSE,
-    original_post INTEGER DEFAULT NULL
+CREATE TABLE replies
+(
+    post_id  integer NOT NULL REFERENCES tweets (id),
+    reply_id integer NOT NULL REFERENCES tweets (id),
+    PRIMARY KEY (post_id,
+                 reply_id)
 );
-
-CREATE TABLE Replies (
-    post_id INTEGER,
-    reply_id INTEGER,
-    PRIMARY KEY (post_id, reply_id),
-    FOREIGN KEY (post_id) REFERENCES Tweets (id),
-    FOREIGN KEY (reply_id) REFERENCES Tweets (id)
+CREATE TABLE bookmarks
+(
+    tweet_id integer NOT NULL REFERENCES tweets (id),
+    username varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    date_bookmarked timestamp DEFAULT LOCALTIMESTAMP(0),
+    PRIMARY KEY (tweet_id,
+                 username)
 );
