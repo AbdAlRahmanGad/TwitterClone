@@ -6,7 +6,7 @@ CREATE TABLE twitter_user
     profile_pic bytea DEFAULT NULL,
     first_name character varying(40) NOT NULL,
     last_name character varying(40) NOT NULL,
-    date_joined date NOT NULL DEFAULT CURRENT_DATE,
+    date_joined date DEFAULT CURRENT_DATE,
     PRIMARY KEY (user_name)
 );
 
