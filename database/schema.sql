@@ -6,7 +6,7 @@ CREATE TABLE twitter_user
     profile_pic bytea DEFAULT NULL,
     first_name character varying(40) NOT NULL,
     last_name character varying(40) NOT NULL,
-    date_joined date DEFAULT CURRENT_DATE,
+    date_joined date NOT NULL DEFAULT CURRENT_DATE,
     PRIMARY KEY (user_name)
 );
 
@@ -33,15 +33,20 @@ CREATE TABLE mutes
     PRIMARY KEY (muted_id,
                  user_name)
 );
-
-CREATE TABLE blocks
+CREATE TABLE blockedBy
 (
-    blocked_id varchar(32) NOT NULL REFERENCES twitter_user (user_name),
-    blocker_id varchar(32) NOT NULL REFERENCES twitter_user (user_name),
-    PRIMARY KEY (blocked_id,
-                 blocker_id)
+    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    who_blocked_me varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    PRIMARY KEY (user_name,
+                 who_blocked_me)
 );
-
+CREATE TABLE blocked
+(
+    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    whom_i_blocked varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    PRIMARY KEY (user_name,
+                 whom_i_blocked)
+);
 CREATE TABLE tweets
 (
     id serial NOT NULL,
