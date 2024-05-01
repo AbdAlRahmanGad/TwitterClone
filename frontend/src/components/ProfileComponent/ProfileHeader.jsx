@@ -3,7 +3,7 @@ import style from "./Profile.module.css";
 
 export function ProfileHeader() {
   return (
-    <header className={style.profileHeader}>
+    <header className={`${style.profileHeader} flex align-center gap-2`}>
       <Link to={"/"}>
         <svg
           viewBox="0 0 24 24"
@@ -16,7 +16,7 @@ export function ProfileHeader() {
       </Link>
       <div>
         <h3 className={style.username}>Ahmed Kashkoush</h3>
-        <p className={style.subTitle}>0 posts</p>
+        <p className={`${style.subTitle} mt-10 mb-10`}>0 posts</p>
       </div>
     </header>
   );

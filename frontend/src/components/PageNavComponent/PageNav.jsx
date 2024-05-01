@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import style from "./PageNav.module.css";
 export default function PageNav() {
   return (
-    <nav className={style.nav}>
+    <nav className={`${style.nav} flex dir-col pl-15 pr-15`}>
       <Link className={style.logo} to={"/"}>
         <svg viewBox="0 0 24 24">
           <g>
@@ -10,7 +10,7 @@ export default function PageNav() {
           </g>
         </svg>
       </Link>
-      <ul>
+      <ul className="flex dir-col">
         <li>
           <NavLink to={"/"}>
             <svg viewBox="0 0 24 24">

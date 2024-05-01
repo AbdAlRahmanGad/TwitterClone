@@ -1,22 +1,23 @@
+@import url("./../../../index.css");
 .nav {
     display: flex;
     margin-top: 2rem;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid var(--color-white-0);
     align-items: center;
     text-align: center;
 }
 .tab {
     flex: 1;
     font-size: 22px;
-    color: white;
+    color: var(--color-white-0);
     border-bottom: 5px solid transparent;
     padding: 1rem 0;
     transition: background-color .3s ease-in-out;
 
 }
 .tab:hover {
-    background-color:#1f2021;
+    background-color:var(--color-dark-2);
 }
 :global(.active) {
-    border-bottom-color: #1d9bf0;
+    border-bottom-color: var(--color-brand-0);
 }

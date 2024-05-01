@@ -1,28 +1,19 @@
+@import url("./../../index.css");
 .nav {
-  display: flex;
-  flex-direction: column;
   gap: 2rem;
-  background-color: #000000;
-  color: #fff;
+  background-color: var(--color-dark-0);
+  color: var(--color-white-0);
   padding-top: 2rem;
-  padding-left: 15px;
-  padding-right: 15px;
+  
 }
 .nav .logo {
   align-self: start;
   width: 45px;
-  fill: white;
+  fill: var(--color-white-0);
   margin-left: 38px;
 }
-.nav ul {
-  display: flex;
-  flex-direction: column;
-}
-.nav ul li {
-}
 .nav ul a {
-  color: #fff;
-  text-decoration: none;
+  color: var(--color-white-0);
   display: flex;
   align-items: end;
   gap: 0.5rem;
@@ -32,14 +23,14 @@
   transition: background-color 0.3s ease-in-out;
 }
 .nav ul a:hover {
-  background-color: #1f2021;
+  background-color: var(--color-dark-1);
 }
 :global(.active) {
   font-weight: bold;
 }
 .nav ul svg {
   width: 35px;
-  fill: white;
+  fill: var(--color-white-0);
 }
 .nav ul a span {
   font-size: 24px;

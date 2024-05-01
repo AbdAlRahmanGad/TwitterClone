@@ -1,29 +1,27 @@
-.post{
-    color: white;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
-    padding-bottom: 2rem;
+@import url("./../../index.css");
+.post {
+  color: var(--color-white-0);
+  border-top: 1px solid var(--color-white-0);
+  border-bottom: 1px solid var(--color-white-0);
+  padding-bottom: 2rem;
 }
-.userInfo{
-    padding-top: 1.5rem ;
-    padding-bottom: 1.5rem;
+.userInfo {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 
-    display: flex;
-    align-items: start;
+  display: flex;
+  align-items: start;
 }
-.userInfo img{
-    border-radius: 50%;
-    width: 44px;
-
+.userInfo img {
+  border-radius: 50%;
+  width: 44px;
 }
-.userInfo span{
-    margin-left: 10px;
-    display: inline-block;
-    color: #71767b;
-    font-size: 22px;
+.userInfo span {
+  margin-left: 10px;
+  display: inline-block;
+  color: var(--color-white-0);
+  font-size: 22px;
 }
 
-
-.content{
-
+.content {
 }

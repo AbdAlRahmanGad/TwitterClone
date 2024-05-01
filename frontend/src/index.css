@@ -3,6 +3,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 /* These CSS variables are global, so they are available in all CSS modules */
 :root {
+  --color-dark-0: #000000;
+  --color-dark-1: #121314;
+  --color-dark-2: #1f2021;
+  --color-dark-3: #16181c;
+  --color-white-0: #ffffff;
+  --color-white-1: #75767b;
+  --color-brand-0: #1d9bf0;
 }
 * {
   margin: 0;
@@ -11,7 +18,7 @@
 }
 body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
-  background-color: black;
+  background-color: var(--color-dark-0);
 }
 .main {
   display: flex;
@@ -28,4 +35,58 @@ a {
 }
 .main > * {
   /* width: 100%; */
+}
+
+/* Framework Classes */
+.flex {
+  display: flex;
+}
+.dir-col {
+  flex-direction: column;
+}
+.juc-between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
+}
+.align-start {
+  align-items: start;
+}
+.align-end {
+  align-items: end;
+}
+.gap-1 {
+  gap: 1rem;
+}
+.gap-2 {
+  gap: 2rem;
+}
+.mt-10 {
+  margin-top: 10px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+.pt-10 {
+  padding-top: 10px;
+}
+.pb-10 {
+  padding-bottom: 10px;
+}
+.pl-15 {
+  padding-left: 15px;
+}
+.pr-15 {
+  padding-right: 15px;
+}
+.btn {
+  border-radius: 15px;
+  border: none;
+  padding: 0.5rem 1rem;
+  align-self: center;
+}
+.btn-light {
+  background-color: var(--color-white-0);
+  color: var(--color-dark-0);
 }

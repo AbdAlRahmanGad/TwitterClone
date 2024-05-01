@@ -1,7 +1,8 @@
+import { Search } from "./Search";
 import style from "./Suggestions.module.css";
 export default function Suggestions() {
   return (
-    <div className={style.suggestions}>
+    <div className={`${style.suggestions} pl-15 pr-15`}>
        {/* Search Bar */}
       <Search />
        {/* Some Peapole to follow */}
@@ -22,19 +23,17 @@ export default function Suggestions() {
 }
 function Person() {
   return (
-    <li className={style.person}>
+    <li className={`${style.person} flex`}>
       <div>
         <img src="/src/assets/img-1.jpg" alt="" />
-        <div>
+        <div className="flex align-center gap-1">
 
         <p className={style.username}>AK</p>
         <p className={style.subTitle}>@AK</p>
         </div>
       </div>
-      <button className={style.btn}>follow</button>
+      <button className="btn btn-light">follow</button>
     </li>
   );
 }
-function Search() {
-  return <input className={style.search} type="search" placeholder="Search..." />;
-}
+
