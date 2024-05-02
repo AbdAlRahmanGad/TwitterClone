@@ -12,7 +12,7 @@ export default function PageNav() {
       </Link>
       <ul className="flex dir-col">
         <li>
-          <NavLink to={"/"}>
+          <NavLink to={"/home"}>
             <svg viewBox="0 0 24 24">
               <g>
                 <path d="M21.591 7.146L12.52 1.157c-.316-.21-.724-.21-1.04 0l-9.071 5.99c-.26.173-.409.456-.409.757v13.183c0 .502.418.913.929.913h6.638c.511 0 .929-.41.929-.913v-7.075h3.008v7.075c0 .502.418.913.929.913h6.639c.51 0 .928-.41.928-.913V7.904c0-.301-.158-.584-.408-.758zM20 20l-4.5.01.011-7.097c0-.502-.418-.913-.928-.913H9.44c-.511 0-.929.41-.929.913L8.5 20H4V8.773l8.011-5.342L20 8.764z"></path>
@@ -32,13 +32,33 @@ export default function PageNav() {
           </NavLink>
         </li>
         <li>
-          <NavLink to={"/"}>
+          <NavLink to={"/bookmarks"}>
             <svg viewBox="0 0 24 24">
               <g>
                 <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
               </g>
             </svg>
             <span>Bookmarks</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={"/notifications"}>
+            <svg viewBox="0 0 24 24">
+              <g>
+                <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
+              </g>
+            </svg>
+            <span>Notifications</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to={"/messages"}>
+            <svg viewBox="0 0 24 24">
+              <g>
+                <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
+              </g>
+            </svg>
+            <span>Message</span>
           </NavLink>
         </li>
       </ul>
