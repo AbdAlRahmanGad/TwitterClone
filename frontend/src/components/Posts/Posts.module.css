@@ -1,9 +1,11 @@
 @import url("./../../index.css");
 .post {
   color: var(--color-white-0);
-  border-top: 1px solid var(--color-white-0);
-  border-bottom: 1px solid var(--color-white-0);
+  border-bottom: var(--border);
   padding-bottom: 2rem;
+}
+.post:first-of-type {
+  margin-top: 2rem;
 }
 .userInfo {
   padding-top: 1.5rem;
