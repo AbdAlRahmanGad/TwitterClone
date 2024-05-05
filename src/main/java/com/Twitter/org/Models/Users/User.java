@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -45,7 +47,7 @@ public class User {
 //    @JoinTable(name = "Following",
 //            joinColumns = @JoinColumn(name = "user_name"),
 //            inverseJoinColumns = @JoinColumn(name = "following_id"))
-//    private Set<User> followingUsers = new HashSet<>();
+//    private List<User> followingUsers = new ArrayList<>();
 //
 //    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @JoinTable(name = "Mutes",

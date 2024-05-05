@@ -1,5 +1,6 @@
 package com.Twitter.org.Repository;
 
+import java.util.List;
 import java.util.Set;
 
 import com.Twitter.org.Models.Users.Followers;
@@ -13,7 +14,7 @@ public interface FollowersRepository extends CrudRepository<Followers, String>{
     @Query(
             value = "SELECT follower_id FROM Followers f WHERE f.user_name = ?1",
             nativeQuery = true)
-    Set<String> GetAllFollowers(String userName);
+    List<String> GetAllFollowers(String userName);
 
     // TODO(query): Add a query to check if the user is following me
 }
