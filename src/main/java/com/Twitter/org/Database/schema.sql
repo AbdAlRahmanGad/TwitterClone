@@ -51,8 +51,8 @@ CREATE TABLE tweets
 (
     id serial NOT NULL,
     date_tweeted timestamp DEFAULT LOCALTIMESTAMP(0),
-    parent_id integer DEFAULT -1,
-    author_id varchar(32) NOT NULL,
+    parent_id integer DEFAULT NULL REFERENCES tweets (id) ON DELETE CASCADE,
+    author_id varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
     content varchar(255) DEFAULT '',
     media bytea DEFAULT NULL,
     bookmarks_number integer DEFAULT 0,
@@ -60,7 +60,7 @@ CREATE TABLE tweets
     repost_number integer DEFAULT 0,
     likes_number integer DEFAULT 0,
     is_repost boolean DEFAULT FALSE,
-    original_post integer DEFAULT NULL,
+    original_post integer DEFAULT NULL REFERENCES tweets (id) ON DELETE CASCADE,
     PRIMARY KEY (id)
 );
 CREATE TABLE likes
