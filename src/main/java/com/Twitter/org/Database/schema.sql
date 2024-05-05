@@ -12,38 +12,38 @@ CREATE TABLE twitter_user
 
 CREATE TABLE followers
 (
-    user_name   varchar(32) NOT NULL REFERENCES twitter_user (user_name),
-    follower_id varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    user_name   varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    follower_id varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
     PRIMARY KEY (follower_id,
                  user_name)
 );
 
 CREATE TABLE following
 (
-    user_name    varchar(32) NOT NULL REFERENCES twitter_user (user_name),
-    following_id varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    user_name    varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    following_id varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
     PRIMARY KEY (following_id,
                  user_name)
 );
 
 CREATE TABLE mutes
 (
-    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name),
-    muted_id  varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    muted_id  varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
     PRIMARY KEY (muted_id,
                  user_name)
 );
 CREATE TABLE blockedBy
 (
-    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name),
-    who_blocked_me varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    who_blocked_me varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
     PRIMARY KEY (user_name,
                  who_blocked_me)
 );
 CREATE TABLE blocked
 (
-    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name),
-    whom_i_blocked varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    whom_i_blocked varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
     PRIMARY KEY (user_name,
                  whom_i_blocked)
 );
@@ -65,23 +65,23 @@ CREATE TABLE tweets
 );
 CREATE TABLE likes
 (
-    tweet_id   integer NOT NULL REFERENCES tweets (id),
-    username   varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    tweet_id   integer NOT NULL REFERENCES tweets (id) ON DELETE CASCADE,
+    username   varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE, -- for simplicity
     date_liked timestamp DEFAULT LOCALTIMESTAMP(0),
     PRIMARY KEY (tweet_id,
                  username)
 );
 CREATE TABLE replies
 (
-    post_id  integer NOT NULL REFERENCES tweets (id),
-    reply_id integer NOT NULL REFERENCES tweets (id),
+    post_id  integer NOT NULL REFERENCES tweets (id) ON DELETE CASCADE,
+    reply_id integer NOT NULL REFERENCES tweets (id) ON DELETE CASCADE,
     PRIMARY KEY (post_id,
                  reply_id)
 );
 CREATE TABLE bookmarks
 (
-    tweet_id integer NOT NULL REFERENCES tweets (id),
-    username varchar(32) NOT NULL REFERENCES twitter_user (user_name),
+    tweet_id integer NOT NULL REFERENCES tweets (id) ON DELETE CASCADE,
+    username varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
     date_bookmarked timestamp DEFAULT LOCALTIMESTAMP(0),
     PRIMARY KEY (tweet_id,
                  username)
