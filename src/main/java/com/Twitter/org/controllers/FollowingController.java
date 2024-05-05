@@ -1,5 +1,6 @@
 package com.Twitter.org.controllers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +33,31 @@ public class FollowingController {
     }
 
     @GetMapping(path = "/{username}/following")
-    public List<String> listFollowings(@PathVariable("username") String username) {
+    public List<UserDto> listFollowings(@PathVariable("username") String username) {
         List<String> followingUsernames = followingService.findAllForUser(username);
-        return new ArrayList<>(followingUsernames);
+        // build a list of followingdto from the variable using streams and map
+
+        List<String[]> splitFollowingUsernames =
+                        followingUsernames.stream()
+                               .map(username1 -> username1.split(","))
+                               .toList();
+        ArrayList<UserDto> followingUserDtos = new ArrayList<>();
+        for (String[] splitFollowingUsername : splitFollowingUsernames) {
+
+            followingUserDtos.add( new UserDto()
+                     .builder()
+                     .userName(splitFollowingUsername[0])
+                     .firstName(splitFollowingUsername[1])
+                     .lastName(splitFollowingUsername[2])
+                     .bio(splitFollowingUsername[3])
+                     .profilePic(splitFollowingUsername[4].getBytes())
+                     .coverPic(splitFollowingUsername[5].getBytes())
+                     .dateJoined(LocalDate.parse(splitFollowingUsername[6]))
+                     .build());
+        }
+
+
+        return followingUserDtos;
     }
 
     // TODO(change return message)
