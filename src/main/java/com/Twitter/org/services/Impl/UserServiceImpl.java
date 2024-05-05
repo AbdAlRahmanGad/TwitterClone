@@ -17,4 +17,14 @@ public class UserServiceImpl implements UserService{
     public User findUserByUsername(String username) {
         return userRepository.findById(username).orElse(null);
     }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void delete(String username) {
+        userRepository.deleteById(username);
+    }
 }
