@@ -30,4 +30,8 @@ public class Following {
         this.followingUser = followingUser;
     }
 
+    public Following(String username, String userToFollow) {
+        this.userName = username;
+        this.followingUser = followingUser;
+    }
 }

@@ -22,6 +22,18 @@ public interface FollowingRepository extends CrudRepository<Following, String>{
             nativeQuery = true)
     List<String> GetAllFollowing(String userName);
 
+    // query to remove a follower
+    @Query(
+            value = "DELETE FROM Following WHERE user_name = ?1 AND following_id = ?2",
+            nativeQuery = true)
+    void removeFollower(String userName, String userToFollow);
+
+    // query to add a follower
+    @Query(
+            value = "INSERT INTO Following (user_name, following_id) VALUES (?1, ?2)",
+            nativeQuery = true)
+    void addFollower(String userName, String userToFollow);
+
 //    @Query(
 //            value = "SELECT u FROM User u WHERE u.userName IN (SELECT f.followingUser FROM Following f WHERE f.userName = ?1)",
 //            nativeQuery = false)
