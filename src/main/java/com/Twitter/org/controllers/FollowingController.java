@@ -10,6 +10,8 @@ import com.Twitter.org.Models.dto.UserDto;
 import com.Twitter.org.mappers.Mapper;
 import com.Twitter.org.services.Impl.FollowingServiceImpl;
 import com.Twitter.org.services.Impl.UserServiceImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,5 +35,18 @@ public class FollowingController {
     public List<String> listFollowings(@PathVariable("username") String username) {
         List<String> followingUsernames = followingService.findAllForUser(username);
         return new ArrayList<>(followingUsernames);
+    }
+
+    // TODO(change return message)
+    @DeleteMapping(path = "/{username}/deleteFollowing/{userToRemoveFollowing}")
+    public ResponseEntity deleteFollowing(@PathVariable("username") String username, @PathVariable("userToRemoveFollowing") String userToRemoveFollowing) {
+        followingService.removeFollower(username, userToRemoveFollowing);
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+    // TODO(change return message)
+    @PostMapping(path = "/{username}/addFollowing/{userToAddFollowing}")
+    public ResponseEntity createFollowing(@PathVariable("username") String username, @PathVariable("userToAddFollowing") String userToAddFollowing) {
+        followingService.addFollower(username, userToAddFollowing);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 }

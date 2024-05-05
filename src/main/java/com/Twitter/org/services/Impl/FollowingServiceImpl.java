@@ -23,12 +23,12 @@ public class FollowingServiceImpl implements FollowingService {
     }
 
     @Override
-    public Following addFollower(String username, String userToFollow) {
-        return null;
+    public void addFollower(String username, String userToFollow) {
+        followingRepository.addFollower(username, userToFollow);
     }
 
     @Override
     public void removeFollower(String username, String userToFollow) {
-
+        followingRepository.removeFollower(username, userToFollow);
     }
 }
