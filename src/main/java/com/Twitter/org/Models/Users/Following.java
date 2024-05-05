@@ -3,6 +3,7 @@ package com.Twitter.org.Models.Users;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
@@ -11,7 +12,7 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Builder
+@Builder
 @Table(name = "Following")
 public class Following {
 
