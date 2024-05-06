@@ -1,10 +1,11 @@
 package com.Twitter.org.Models;
 
+import java.time.LocalDateTime;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +22,7 @@ public class Likes {
     private String username;
 
     @Column(name = "date_liked")
-    private Date dateLiked;
+    private LocalDateTime dateLiked;
     // TODO() check if Date is valid and modify it for the sorting of the bookmarks
 
     //    TODO

@@ -35,7 +35,6 @@ public class FollowingController {
     @GetMapping(path = "/{username}/following")
     public List<UserDto> listFollowings(@PathVariable("username") String username) {
         List<String> followingUsernames = followingService.findAllForUser(username);
-        // build a list of followingdto from the variable using streams and map
 
         List<String[]> splitFollowingUsernames =
                         followingUsernames.stream()
@@ -55,7 +54,6 @@ public class FollowingController {
                      .dateJoined(LocalDate.parse(splitFollowingUsername[6]))
                      .build());
         }
-
 
         return followingUserDtos;
     }
