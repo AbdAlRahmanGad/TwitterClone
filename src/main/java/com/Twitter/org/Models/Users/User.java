@@ -1,20 +1,17 @@
 package com.Twitter.org.Models.Users;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcType;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
-import java.sql.Types;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 //@JdbcTypeCode(Types.VARBINARY)
 @Data
@@ -40,11 +37,11 @@ public class User {
 
 
     @JdbcType(VarbinaryJdbcType.class)
-//@Type(type = "org.hibernate.type.BinaryType")
+    //@Type(type = "org.hibernate.type.BinaryType")
     @Column(name = "profile_pic")
     private byte[] profilePic;
 
-//    @Lob
+    //    @Lob
     @Column(name = "cover_pic")
     private byte[] coverPic;
 

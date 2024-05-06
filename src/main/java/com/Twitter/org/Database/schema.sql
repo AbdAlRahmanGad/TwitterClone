@@ -10,14 +10,6 @@ CREATE TABLE twitter_user
     PRIMARY KEY (user_name)
 );
 
-CREATE TABLE followers
-(
-    user_name   varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
-    follower_id varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
-    PRIMARY KEY (follower_id,
-                 user_name)
-);
-
 CREATE TABLE following
 (
     user_name    varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,

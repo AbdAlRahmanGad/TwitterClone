@@ -1,19 +1,17 @@
 package com.Twitter.org.Repository;
 
 
-import java.util.List;
-import java.util.Set;
-
 import com.Twitter.org.Models.Users.Following;
-import com.Twitter.org.Models.Users.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface FollowingRepository extends CrudRepository<Following, String>{
+import java.util.List;
 
-//    @Query(
+@Repository
+public interface FollowingRepository extends CrudRepository<Following, String> {
+
+    //    @Query(
 //            value = "SELECT following_id FROM Following f WHERE f.user_name = ?1",
 //            nativeQuery = true)
 //    Set<String> GetAllFollowing(String userName);
@@ -26,7 +24,7 @@ public interface FollowingRepository extends CrudRepository<Following, String>{
     @Query(
             value = "DELETE FROM Following WHERE user_name = ?1 AND following_id = ?2",
             nativeQuery = true)
-    void removeFollower(String userName, String userToFollow);
+    void removeFollow(String userName, String userToFollow);
 
     // query to add a follower
     @Query(
@@ -39,6 +37,18 @@ public interface FollowingRepository extends CrudRepository<Following, String>{
 //            nativeQuery = false)
 //    List<User> GetAllFollowing(String userName);
 
-    // TODO(query): Add a query to check if I am following the user
+    // query to get all followers
+    @Query(
+            value = "SELECT * FROM twitter_user WHERE user_name IN (SELECT user_name FROM Following WHERE following_id = ?1)",
+            nativeQuery = true)
+    List<String> GetAllFollowers(String userName);
+
+    // query to check if specific user is following another user, boolean
+    // isFollowing("user1", "user2") returns true if user1 is following user2
+    @Query(
+            value = "SELECT EXISTS(SELECT * FROM Following WHERE user_name = ?1 AND following_id = ?2)",
+            nativeQuery = true)
+    boolean isFollowing(String userName, String userToFollow);
+
 
 }
