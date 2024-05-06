@@ -7,6 +7,9 @@ import com.Twitter.org.Models.Users.Following;
 public interface FollowingService {
 
     List<String> findAllForUser(String username);
-    void addFollower(String username, String userToFollow);
-    void removeFollower(String username, String userToFollow);
+    void addFollow(String username, String userToFollow);
+    void removeFollow(String username, String userToFollow);
+
+    List<String> findAllFollowers(String username);
+    boolean isFollowing(String username, String userToFollow);
 }
