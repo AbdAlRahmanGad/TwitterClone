@@ -46,27 +46,6 @@ public class TweetsController {
                         .map(tweetsMapper::mapTo)
                         .toList();
 
-//        tweetsMapper.mapTo(allTweets);
-//        List<TweetsDto> allTweetsDtos =
-//                allTweets.stream()
-//                         .map(tweet -> tweet.split(","))
-//                         .map(splitTweet -> new TweetsDto()
-//                                  .builder()
-//                                  .id((Integer.parseInt(splitTweet[0])))
-//                                  .dateTweeted(LocalDateTime.parse(splitTweet[1]))
-//                                  .parentId(Integer.parseInt(splitTweet[2]))
-//                                  .authorId(splitTweet[3])
-//                                  .content(splitTweet[4])
-//                                  .media(splitTweet[5].getBytes())
-//                                  .bookmarksNumber(Integer.parseInt(splitTweet[6]))
-//                                  .repliesNumber(Integer.parseInt(splitTweet[7]))
-//                                  .repostNumber(Integer.parseInt(splitTweet[8]))
-//                                  .likesNumber(Integer.parseInt(splitTweet[9]))
-//                                  .isRepost(Boolean.parseBoolean(splitTweet[10]))
-//                                  .originalPost(Integer.parseInt(splitTweet[11]))
-//                                  .build())
-//                         .toList();
-
         return allTweetsDtos;
     }
 
@@ -85,31 +64,6 @@ public class TweetsController {
                          .map(tweetsMapper::mapTo)
                          .toList();
         return userTweetsDtos;
-//        List<String> userTweets = tweetsService.GetAllTweetsForUser(username);
-//
-//
-//
-//        List<TweetsDto> userTweetsDtos =
-//                userTweets.stream()
-//                           .map(tweet -> tweet.split(","))
-//                           .map(splitTweet -> new TweetsDto()
-//                                   .builder()
-//                                   .id((Integer.parseInt(splitTweet[0])))
-//                                   .dateTweeted(LocalDateTime.parse(splitTweet[1]))
-//                                           .parentId(Integer.parseInt(splitTweet[2]))
-//                                           .authorId(splitTweet[3])
-//                                           .content(splitTweet[4])
-//                                           .media(splitTweet[5].getBytes())
-//                                           .bookmarksNumber(Integer.parseInt(splitTweet[6]))
-//                                           .repliesNumber(Integer.parseInt(splitTweet[7]))
-//                                           .repostNumber(Integer.parseInt(splitTweet[8]))
-//                                           .likesNumber(Integer.parseInt(splitTweet[9]))
-//                                           .isRepost(Boolean.parseBoolean(splitTweet[10]))
-//                                           .originalPost(Integer.parseInt(splitTweet[11]))
-//                                           .build())
-//                                           .toList();
-//
-//        return userTweetsDtos;
     }
 
     @DeleteMapping("/status/deleteTweet/{tweetId}")
