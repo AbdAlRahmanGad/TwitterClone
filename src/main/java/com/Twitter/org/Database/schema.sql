@@ -49,7 +49,7 @@ CREATE TABLE blocked
 );
 CREATE TABLE tweets
 (
-    id serial NOT NULL,
+    id serial,
     date_tweeted timestamp DEFAULT LOCALTIMESTAMP(0),
     parent_id integer DEFAULT NULL REFERENCES tweets (id) ON DELETE CASCADE,
     author_id varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,

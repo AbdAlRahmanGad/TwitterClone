@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -23,7 +24,7 @@ public class Bookmarks {
     private String username;
 
     @Column(name = "date_bookmarked")
-    private Date dateBookmarked;
+    private LocalDateTime dateBookmarked;
     // TODO() check if Date is valid and modify it for the sorting of the bookmarks
 
 
