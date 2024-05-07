@@ -1,16 +1,17 @@
 package com.Twitter.org.Models;
 
-import java.time.LocalDateTime;
-
+import com.Twitter.org.Models.Tweets.Tweets;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "Likes")
+@IdClass(LikesId.class)
 public class Likes {
 
     @Id
@@ -23,12 +24,16 @@ public class Likes {
 
     @Column(name = "date_liked")
     private LocalDateTime dateLiked;
+
+    // ManyToOne relationship with the tweets table
+    @ManyToOne
+    @JoinColumn(name = "tweet_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Tweets tweet;
+
+
     // TODO() check if Date is valid and modify it for the sorting of the bookmarks
 
     //    TODO
-    //1- check if a user liked a post
-    //2- count all liked of a post
-    //3- get all posts a user liked
     //4 check if post is liked by a certain user (for search)
 
 }
