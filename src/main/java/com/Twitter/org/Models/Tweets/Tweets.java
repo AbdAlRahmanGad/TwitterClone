@@ -1,5 +1,6 @@
 package com.Twitter.org.Models.Tweets;
 
+import com.Twitter.org.Models.Bookmarks;
 import com.Twitter.org.Models.Likes;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -64,4 +65,8 @@ public class Tweets {
     // One to many with likes, One tweet can have many likes
     @OneToMany(mappedBy = "tweetId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Likes> likes;
+
+    // One to many with Bookmarks, One tweet can have many bookmarks
+    @OneToMany(mappedBy = "tweetId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Bookmarks> bookmarks;
 }
