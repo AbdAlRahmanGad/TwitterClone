@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import style from "./Profile.module.css";
+import style from "./../../pages/ProfilePage.module.css";
+import style2 from "./ProfileHero.module.css";
 
 export function ProfileHeader() {
   return (
@@ -16,7 +17,7 @@ export function ProfileHeader() {
       </Link>
       <div>
         <h3 className={style.username}>Ahmed Kashkoush</h3>
-        <p className={`${style.subTitle} mt-10 mb-10`}>0 posts</p>
+        <p className={`${style2.subTitle} mt-10 mb-10`}>0 posts</p>
       </div>
     </header>
   );

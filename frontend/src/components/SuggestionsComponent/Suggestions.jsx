@@ -1,3 +1,4 @@
+import { Person } from "./Person";
 import { Search } from "./Search";
 import style from "./Suggestions.module.css";
 export default function Suggestions() {
@@ -21,19 +22,3 @@ export default function Suggestions() {
     </div>
   );
 }
-function Person() {
-  return (
-    <li className={`${style.person} flex`}>
-      <div>
-        <img src="/src/assets/img-1.jpg" alt="" />
-        <div className="flex align-center gap-1">
-
-        <p className={style.username}>AK</p>
-        <p className={style.subTitle}>@AK</p>
-        </div>
-      </div>
-      <button className="btn btn-light">follow</button>
-    </li>
-  );
-}
-

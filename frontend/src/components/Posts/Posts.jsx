@@ -28,6 +28,8 @@ function Post(){
       elit. Inventore corporis nam provident? Commodi beatae, corporis dolor
       minus rem dolore minima.
     </p>
+
+    
   </div>
   );
 }
