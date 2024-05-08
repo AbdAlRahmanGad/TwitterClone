@@ -1,10 +1,10 @@
 package com.Twitter.org.Models;
 
+import com.Twitter.org.Models.Tweets.Tweets;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "Bookmarks")
+@IdClass(BookmarksId.class)
 public class Bookmarks {
 
     @Id
@@ -25,8 +26,14 @@ public class Bookmarks {
 
     @Column(name = "date_bookmarked")
     private LocalDateTime dateBookmarked;
-    // TODO() check if Date is valid and modify it for the sorting of the bookmarks
 
+    // ManyToOne relationship with the tweets table
+    // Many Bookmarks can be associated with one Tweet
+    @ManyToOne
+    @JoinColumn(name = "tweet_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Tweets tweet;
+
+    // TODO() check if Date is valid and modify it for the sorting of the bookmarks
 
 
 }
