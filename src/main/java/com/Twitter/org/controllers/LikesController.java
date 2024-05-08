@@ -1,7 +1,9 @@
 package com.Twitter.org.controllers;
 
+import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto;
+import com.Twitter.org.Models.dto.UserDto;
 import com.Twitter.org.mappers.Impl.TweetsMapper;
 import com.Twitter.org.services.LikesService;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +26,28 @@ public class LikesController {
 
     // User likes a tweet
     @PostMapping("/{username}/tweets/{tweetId}/likes")
-    public ResponseEntity<String> likeTweet(@PathVariable String username, @PathVariable int tweetId) {
-        likesService.addLike(username, tweetId);
-        return ResponseEntity.ok("Tweet with ID " + tweetId + " was liked by user " + username);
+    public ResponseEntity<Response> likeTweet(@PathVariable String username, @PathVariable int tweetId) {
+        Response response = likesService.addLike(username, tweetId);
+        if (response.isSuccess()) {
+            // Map the Tweets object to a TweetsDto object
+            TweetsDto tweetDto = tweetsMapper.mapTo((Tweets) response.getData());
+            // Set the TweetsDto object to the response data
+            response.setData(tweetDto);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     // User unlikes a tweet
     @DeleteMapping("/{username}/tweets/{tweetId}/likes")
-    public ResponseEntity<String> unlikeTweet(@PathVariable String username, @PathVariable int tweetId) {
-        likesService.removeLike(username, tweetId);
-        return ResponseEntity.ok("Tweet with ID " + tweetId + " was unliked by user " + username);
+    public ResponseEntity<Response> unlikeTweet(@PathVariable String username, @PathVariable int tweetId) {
+        Response response = likesService.removeLike(username, tweetId);
+        if (response.isSuccess()) {
+            TweetsDto tweetDto = tweetsMapper.mapTo((Tweets) response.getData());
+            response.setData(tweetDto);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     // Check if a user has liked a tweet
@@ -59,4 +73,13 @@ public class LikesController {
         return likedTweetsDtos;
     }
 
+    // Get all users who liked a tweet
+    @GetMapping("/tweets/{tweetId}/likes/users")
+    public List<UserDto> getUsersWhoLikedTweet(@PathVariable int tweetId) {
+        List<UserDto> users;
+        users = likesService.getUsersWhoLikedTweet(tweetId).stream()
+                .map(UserDto::new)
+                .toList();
+        return users;
+    }
 }
