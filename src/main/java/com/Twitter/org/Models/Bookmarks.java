@@ -33,7 +33,14 @@ public class Bookmarks {
     @JoinColumn(name = "tweet_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Tweets tweet;
 
-    // TODO() check if Date is valid and modify it for the sorting of the bookmarks
 
+    // automatically set the dateLiked when a bookmark is created
+    @PrePersist
+    public void prePersist() {
+        this.dateBookmarked = LocalDateTime.now();
+    }
+
+
+    // TODO() check if Date is valid and modify it for the sorting of the bookmarks
 
 }

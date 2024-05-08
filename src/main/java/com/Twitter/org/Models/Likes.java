@@ -30,10 +30,15 @@ public class Likes {
     @JoinColumn(name = "tweet_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Tweets tweet;
 
+    // automatically set the dateLiked when a like is created
+    @PrePersist
+    public void prePersist() {
+        this.dateLiked = LocalDateTime.now();
+    }
+
 
     // TODO() check if Date is valid and modify it for the sorting of the bookmarks
 
     //    TODO
     //4 check if post is liked by a certain user (for search)
-
 }

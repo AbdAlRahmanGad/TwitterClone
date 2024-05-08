@@ -22,24 +22,26 @@ public class BookmarksController {
 
     // User bookmarks a tweet
     @PostMapping("/{username}/bookmarks/{tweetId}")
-    public ResponseEntity<String> bookmarkTweet(@PathVariable String username, @PathVariable int tweetId) {
+    public ResponseEntity<Response> bookmarkTweet(@PathVariable String username, @PathVariable int tweetId) {
         Response response = bookmarksService.addBookmark(username, tweetId);
         if (response.isSuccess()) {
-            return ResponseEntity.ok("Tweet with ID " + tweetId + " was bookmarked by user " + username);
-        } else {
-            return ResponseEntity.badRequest().body(response.getMessage());
+            TweetsDto tweetDto = tweetsMapper.mapTo((Tweets) response.getData());
+            response.setData(tweetDto);
+            return ResponseEntity.ok(response);
         }
+        return ResponseEntity.badRequest().body(response);
     }
 
     // User un-bookmarks a tweet
     @DeleteMapping("/{username}/bookmarks/{tweetId}")
-    public ResponseEntity<String> unbookmarkTweet(@PathVariable String username, @PathVariable int tweetId) {
+    public ResponseEntity<Response> unbookmarkTweet(@PathVariable String username, @PathVariable int tweetId) {
         Response response = bookmarksService.removeBookmark(username, tweetId);
         if (response.isSuccess()) {
-            return ResponseEntity.ok("Tweet with ID " + tweetId + " was un-bookmarked by user " + username);
-        } else {
-            return ResponseEntity.badRequest().body(response.getMessage());
+            TweetsDto tweetDto = tweetsMapper.mapTo((Tweets) response.getData());
+            response.setData(tweetDto);
+            return ResponseEntity.ok(response);
         }
+        return ResponseEntity.badRequest().body(response);
     }
 
     // Check if a user has bookmarked a tweet
