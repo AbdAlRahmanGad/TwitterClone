@@ -1,7 +1,7 @@
 package com.Twitter.org.services.Impl;
 
-import com.Twitter.org.Models.Bookmarks;
-import com.Twitter.org.Models.BookmarksId;
+import com.Twitter.org.Models.Tweets.Bookmarks.Bookmarks;
+import com.Twitter.org.Models.Tweets.Bookmarks.BookmarksId;
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Repository.BookmarksRepository;

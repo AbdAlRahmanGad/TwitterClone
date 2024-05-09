@@ -1,7 +1,7 @@
 package com.Twitter.org.Repository;
 
-import com.Twitter.org.Models.Likes;
-import com.Twitter.org.Models.LikesId;
+import com.Twitter.org.Models.Tweets.Likes.Likes;
+import com.Twitter.org.Models.Tweets.Likes.LikesId;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.Users.User;
 import org.springframework.data.jpa.repository.Query;

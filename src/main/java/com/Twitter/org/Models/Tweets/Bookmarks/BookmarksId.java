@@ -1,4 +1,4 @@
-package com.Twitter.org.Models;
+package com.Twitter.org.Models.Tweets.Bookmarks;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

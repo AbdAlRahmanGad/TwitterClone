@@ -1,7 +1,7 @@
 package com.Twitter.org.Models.Tweets;
 
-import com.Twitter.org.Models.Bookmarks;
-import com.Twitter.org.Models.Likes;
+import com.Twitter.org.Models.Tweets.Bookmarks.Bookmarks;
+import com.Twitter.org.Models.Tweets.Likes.Likes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
