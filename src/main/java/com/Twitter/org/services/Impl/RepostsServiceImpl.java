@@ -28,6 +28,8 @@ public class RepostsServiceImpl implements RepostsService {
 
     @Override
     public Tweets repostTweet(String username, int tweetId) {
+        Tweets originalTweet = tweetsRepository.findById(tweetId).get();
+        originalTweet.setRepostNumber(originalTweet.getRepostNumber() + 1);
       return tweetsRepository.save(new Tweets().
                 builder()
                 .authorId(username)
@@ -54,10 +56,11 @@ public class RepostsServiceImpl implements RepostsService {
 
     @Override
     public void deleteRepost(String username, int tweetId) {
-        Tweets originalTweet = tweetsRepository.findById(tweetId).get();
-        originalTweet.setRepostNumber(originalTweet.getRepostNumber() + 1);
+        Tweets tweet =  tweetsRepository.findById(tweetId).get();
+        Tweets originalTweet = tweetsRepository.findById(tweet.getOriginalPost()).get();
+        originalTweet.setRepostNumber(originalTweet.getRepostNumber() - 1);
         tweetsRepository.save(originalTweet);
-        tweetsRepository.deleteRepost(tweetId, username);
+        tweetsRepository.deleteRepost(tweet.getOriginalPost(), username);
     }
 
     @Override
