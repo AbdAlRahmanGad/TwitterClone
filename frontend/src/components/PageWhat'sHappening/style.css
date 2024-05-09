@@ -1,0 +1,19 @@
+.container {
+  color: white;
+  margin-top: 2rem;
+  background-color: var(--color-dark-3);
+  border-radius: 27px;
+  padding: 1rem;
+}
+.header {
+  margin: 5px 0 20px;
+}
+.header-2 {
+  margin-bottom: 20px;
+}
+.component {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

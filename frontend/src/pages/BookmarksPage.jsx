@@ -1,3 +1,9 @@
+import PageNav from "../components/PageNavComponent/PageNav";
+
 export default function BookmarksPage() {
-  return <h1>BookmarksPage</h1>;
+  return (
+    <>
+      <PageNav />
+    </>
+  );
 }
