@@ -15,7 +15,6 @@ public class TweetsDto {
 
         private Integer id;
 
-
         private LocalDateTime dateTweeted;
 
         private String authorId;
@@ -23,14 +22,7 @@ public class TweetsDto {
         private Integer parentId;
 
         private String content;
-        // {
-//     "id": 222,
-//     "author_id": "Ahmed404",
-//     "content": "my new tweeet",
-//     "media": null,
-//     "parent_id": 0,
-//     "original_post": null
-// }
+
         private byte[] media;
 
         @Builder.Default
