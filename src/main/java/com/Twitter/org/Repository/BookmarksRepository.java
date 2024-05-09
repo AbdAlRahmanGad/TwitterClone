@@ -1,7 +1,7 @@
 package com.Twitter.org.Repository;
 
-import com.Twitter.org.Models.Bookmarks;
-import com.Twitter.org.Models.BookmarksId;
+import com.Twitter.org.Models.Tweets.Bookmarks.Bookmarks;
+import com.Twitter.org.Models.Tweets.Bookmarks.BookmarksId;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

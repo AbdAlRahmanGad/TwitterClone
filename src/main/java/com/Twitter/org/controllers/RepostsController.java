@@ -2,7 +2,7 @@ package com.Twitter.org.controllers;
 
 import java.util.List;
 
-import com.Twitter.org.Models.Quote;
+import com.Twitter.org.Models.Tweets.Quote;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto;
 import com.Twitter.org.mappers.Impl.TweetsMapper;
@@ -36,10 +36,9 @@ public class RepostsController {
     @GetMapping(path = "/{tweetId}/reposts")
     public List<TweetsDto> listReposts(@PathVariable("tweetId") int tweetId) {
         List<Tweets> reposts = repostsService.getAllRepostsOfTweet(tweetId);
-        List<TweetsDto> repostsDtos = reposts.stream()
+        return reposts.stream()
                 .map(tweetsMapper::mapTo)
                 .toList();
-        return repostsDtos;
     }
 
     // Endpoint to delete a repost

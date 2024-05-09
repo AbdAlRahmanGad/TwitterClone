@@ -1,4 +1,4 @@
-package com.Twitter.org.Models;
+package com.Twitter.org.Models.Users.Mutes;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class LikesId implements Serializable {
-    private Integer tweetId;
-    private String username;
-
+public class MutesId implements Serializable {
+    private String userName;
+    private String mutedId;
 }

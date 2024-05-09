@@ -1,6 +1,6 @@
 package com.Twitter.org.services.Impl;
 
-import com.Twitter.org.Models.Likes;
+import com.Twitter.org.Models.Tweets.Likes.Likes;
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.Users.User;
