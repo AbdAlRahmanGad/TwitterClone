@@ -11,16 +11,32 @@ import java.util.List;
 public interface TweetsRepository extends CrudRepository<Tweets, Integer> {
 
 
-    //    Tweets findByTweetId(int tweetId);
-//    Tweets findByUser(User user);
+    // Tweets findByTweetId(int tweetId);
     List<Tweets> findByAuthorId(String username);
 
     // GetAllTweetsForFollowingHomeFeed
-//    implement get all tweets from poeople whome user follows
-//
-//    make a native full sql query
+    // implement get all tweets from poeople whome user follows
+
     @Query(value = "SELECT t.* FROM tweets t WHERE author_id  IN ( SELECT following.following_id from following WHERE user_name = ?1)", nativeQuery = true)
     List<String> findAllTweetsFromUserFollowing(String username);
+
+    /**
+     * reposts
+     */
+    @Query(value = "SELECT count(*) FROM tweets WHERE parent_id = ?1", nativeQuery = true)
+    int countReposts(int tweetId);
+
+    @Query(value = "SELECT * FROM tweets WHERE parent_id = ?1", nativeQuery = true)
+    List<Tweets> findReposts(int tweetId);
+
+    // check if a user has reposted a tweet
+    @Query(value = "SELECT count(*) FROM tweets WHERE parent_id = ?1 AND author_id = ?2", nativeQuery = true)
+    int hasUserRepostedTweet(int tweetId, String username);
+
+    // delete a repost
+    @Query(value = "DELETE FROM tweets WHERE parent_id = ?1 AND author_id = ?2", nativeQuery = true)
+    void deleteRepost(int tweetId, String username);
+
 
 //    Tweets findByTweet(String tweet);
 //    Tweets findByTweetTime(String tweetTime);

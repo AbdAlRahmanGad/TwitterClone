@@ -3,6 +3,8 @@ package com.Twitter.org.Models.Tweets;
 import com.Twitter.org.Models.Bookmarks;
 import com.Twitter.org.Models.Likes;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 @Entity
 @Table(name = "Tweets")
 public class Tweets {
