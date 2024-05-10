@@ -1,5 +1,7 @@
 package com.Twitter.org.services.Impl;
 
+import java.util.List;
+
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Repository.TweetsRepository;
 import com.Twitter.org.services.RepostsService;
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import java.util.Optional;
 
 @Service
 public class RepostsServiceImpl implements RepostsService {
@@ -28,33 +32,85 @@ public class RepostsServiceImpl implements RepostsService {
     }
 
     @Override
-    public Tweets repostTweet(String username, int tweetId) {
-        Tweets originalTweet = tweetsRepository.findById(tweetId).get();
-        originalTweet.setRepostNumber(originalTweet.getRepostNumber() + 1);
-        return tweetsRepository.save(new Tweets().
-                builder()
-                .authorId(username)
-                .parentId(tweetId)
-                .repost(true)
-                .originalPost(tweetId)
-                .build());
+    public Response repostTweet(String username, int tweetId) {
+        // find the tweet by id
+        Optional<Tweets> tweet = tweetsRepository.findById(tweetId);
+        Response response = new Response();
+        // if tweet is present
+        if (tweet.isPresent()) {
+            // check if the tweet is already reposted
+            if (tweetsRepository.hasUserRepostedTweet(tweetId, username) > 0) {
+                response.setSuccess(false);
+                response.setMessage("Tweet already reposted");
+                return response;
+            }
+
+            // create a new repost
+            Tweets repost = new Tweets().
+                    builder()
+                    .authorId(username)
+                    .parentId(tweetId)
+                    .repost(true)
+                    .originalPost(tweetId)
+                    .build();
+
+            // increment the reposts counter for the tweet
+            tweet.get().setRepostNumber(tweet.get().getRepostNumber() + 1);
+            tweetsRepository.save(tweet.get());
+
+            // save the repost
+            tweetsRepository.save(repost);
+
+            response.setMessage("Tweet reposted successfully");
+            response.setData(repost);
+            response.setSuccess(true);
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Tweet not found");
+        }
+        return response;
     }
 
     @Override
-    public Tweets quoteTweet(String username, int tweetId, String comment) {
-        Tweets originalTweet = tweetsRepository.findById(tweetId).get();
-        originalTweet.setRepostNumber(originalTweet.getRepostNumber() + 1);
-        tweetsRepository.save(originalTweet);
-        return tweetsRepository.save(new Tweets().
-                builder()
-                .authorId(username)
-                .content(comment)
-                .parentId(tweetId)
-                .repost(true)
-                .originalPost(tweetId)
-                .build());
-    }
+    public Response quoteTweet(String username, int tweetId, String comment) {
+        // find the tweet by id
+        Optional<Tweets> tweet = tweetsRepository.findById(tweetId);
+        Response response = new Response();
+        // if tweet is present
+        if (tweet.isPresent()) {
+            // check if the tweet is already quoted
+            if (tweetsRepository.hasUserQuotedTweet(tweetId, username) > 0) {
+                response.setSuccess(false);
+                response.setMessage("Tweet already quoted");
+                return response;
+            }
 
+            // create a new quote
+            Tweets quote = new Tweets().
+                    builder()
+                    .authorId(username)
+                    .parentId(tweetId)
+                    .repost(true)
+                    .content(comment)
+                    .originalPost(tweetId)
+                    .build();
+
+            // increment the quotes counter for the tweet
+            tweet.get().setRepostNumber(tweet.get().getRepostNumber() + 1);
+            tweetsRepository.save(tweet.get());
+
+            // save the quote
+            tweetsRepository.save(quote);
+
+            response.setMessage("Tweet quoted successfully");
+            response.setData(quote);
+            response.setSuccess(true);
+        } else {
+            response.setSuccess(false);
+            response.setMessage("Tweet not found");
+        }
+        return response;
+    }
     @Override
     public void deleteRepost(String username, int tweetId) {
         Tweets tweet = tweetsRepository.findById(tweetId).get();
@@ -66,7 +122,7 @@ public class RepostsServiceImpl implements RepostsService {
 
     @Override
     public boolean hasUserRepostedTweet(String username, int tweetId) {
-        return tweetsRepository.hasUserRepostedTweet(tweetId, username) > 0;
+        return  tweetsRepository.hasUserRepostedTweet(tweetId, username) > 0;
     }
 
     // This method updates the reposts counter for all tweets on startup
