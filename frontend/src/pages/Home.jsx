@@ -1,8 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
-import PageNav from "../components/PageNavComponent/PageNav";
-import { AppNav } from "../components/ProfileComponent/ProfileNav/AppNav";
+import PageNav from "../components/PageNav";
+import { AppNav } from "../components/shared/AppNav";
 import Suggestions from "../components/SuggestionsComponent/Suggestions";
-import { Posts } from "../components/Posts/Posts";
+import { Posts } from "../components/shared/Posts";
 import PageWhatsHappening from "../components/PageWhat'sHappening/PageWhatsHappening";
 // import style from './../components/ProfileComponent/ProfileNav/ProfileNav.jsx';
 export default function Home() {

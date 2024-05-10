@@ -1,4 +1,4 @@
-import { Posts } from "../Posts/Posts";
+import { Posts } from "./../shared/Posts";
 
 export function Replies() {
   return (

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import PageNav from "../components/PageNavComponent/PageNav";
+import PageNav from "../components/PageNav";
 import Suggestions from "../components/SuggestionsComponent/Suggestions";
 import { ProfileHeader } from "../components/ProfileComponent/ProfileHeader";
 import { ProfileHero } from "../components/ProfileComponent/ProfileHero";

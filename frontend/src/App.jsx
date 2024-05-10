@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import ProfilePage from "./pages/ProfilePage";
-import { Posts } from "./components/Posts/Posts";
+import { Posts } from "./components/shared/Posts";
 import { Replies } from "./components/ProfileComponent/Replies";
 import NotificationsPage from "./pages/NotificationsPage";
 import BookmarksPage from "./pages/BookmarksPage";

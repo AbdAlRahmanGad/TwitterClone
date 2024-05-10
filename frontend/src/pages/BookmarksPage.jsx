@@ -1,4 +1,4 @@
-import PageNav from "../components/PageNavComponent/PageNav";
+import PageNav from "../components/PageNav";
 
 export default function BookmarksPage() {
   return (

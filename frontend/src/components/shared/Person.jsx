@@ -1,5 +1,4 @@
-import style from "./Suggestions.module.css";
-
+import style from './Person.module.css'
 export function Person() {
   return (
     <li className={`${style.person} flex juc-between`}>

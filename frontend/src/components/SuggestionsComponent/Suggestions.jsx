@@ -1,4 +1,4 @@
-import { Person } from "./Person";
+import { Person } from "./../shared/Person";
 import { Search } from "./Search";
 import style from "./Suggestions.module.css";
 export default function Suggestions() {

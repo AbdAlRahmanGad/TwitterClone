@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-import { AppNav } from "./AppNav";
+import { AppNav } from "./../../shared/AppNav";
 export default function ProfileNav() {
   return (
     <AppNav classes="mt-2">

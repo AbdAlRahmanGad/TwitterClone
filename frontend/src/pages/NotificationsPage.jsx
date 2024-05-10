@@ -1,9 +1,8 @@
 import { NavLink, Outlet } from "react-router-dom";
-import PageNav from "../components/PageNavComponent/PageNav";
+import PageNav from "../components/PageNav";
 import PageWhatsHappening from "../components/PageWhat'sHappening/PageWhatsHappening";
-import { AppNav } from "../components/ProfileComponent/ProfileNav/AppNav";
 import Suggestions from "../components/SuggestionsComponent/Suggestions";
-import { Posts } from "../components/Posts/Posts";
+import { Posts } from "../components/shared/Posts";
 import NotificationsComponent from "../components/NotificationComponent/NotificationComponent";
 
 export default function NotificationsPage() {
