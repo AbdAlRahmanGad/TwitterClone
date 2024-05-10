@@ -1,9 +1,7 @@
 package com.Twitter.org.Models.Users;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.Twitter.org.Models.Users.Blocks.Blocks;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +10,7 @@ import org.hibernate.annotations.JdbcType;
 import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
 import java.time.LocalDate;
+import java.util.List;
 
 //@JdbcTypeCode(Types.VARBINARY)
 @Data
@@ -47,6 +46,13 @@ public class User {
 
     @Column(name = "date_joined", nullable = false)
     private LocalDate dateJoined = LocalDate.now();
+
+    @OneToMany(mappedBy = "blocker")
+    private List<Blocks> blockedUsers;
+
+    @OneToMany(mappedBy = "blocked")
+    private List<Blocks> blockedByUsers;
+
 
 //    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 //    @JoinTable(name = "Following",

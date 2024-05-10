@@ -2,6 +2,7 @@ package com.Twitter.org.Repository;
 
 
 import com.Twitter.org.Models.Users.Following;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -21,12 +22,14 @@ public interface FollowingRepository extends CrudRepository<Following, String> {
     List<String> GetAllFollowing(String userName);
 
     // query to remove a follower
+    @Modifying
     @Query(
             value = "DELETE FROM Following WHERE user_name = ?1 AND following_id = ?2",
             nativeQuery = true)
     void removeFollow(String userName, String userToFollow);
 
     // query to add a follower
+    @Modifying
     @Query(
             value = "INSERT INTO Following (user_name, following_id) VALUES (?1, ?2)",
             nativeQuery = true)

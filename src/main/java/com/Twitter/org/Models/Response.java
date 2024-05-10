@@ -15,4 +15,10 @@ public class Response {
         this.message = "";
         this.data = null;
     }
+
+    public Response(boolean b, String youCannotBlockYourself) {
+        this.success = b;
+        this.message = youCannotBlockYourself;
+        this.data = null;
+    }
 }
