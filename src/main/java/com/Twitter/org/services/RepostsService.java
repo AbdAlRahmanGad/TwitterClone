@@ -2,6 +2,7 @@ package com.Twitter.org.services;
 
 import java.util.List;
 
+import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 
 public interface RepostsService {
@@ -11,9 +12,9 @@ public interface RepostsService {
     // get all reposts of a tweet
     List<Tweets> getAllRepostsOfTweet(int tweetId);
     // repost a tweet
-    Tweets repostTweet(String username, int tweetId);
+    Response repostTweet(String username, int tweetId);
     // quote a tweet
-    Tweets quoteTweet(String username, int tweetId, String comment);
+    Response quoteTweet(String username, int tweetId, String comment);
     // delete a repost
     void deleteRepost(String username, int tweetId);
     // check if a user has reposted a tweet

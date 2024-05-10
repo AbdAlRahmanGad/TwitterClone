@@ -33,6 +33,11 @@ public interface TweetsRepository extends CrudRepository<Tweets, Integer> {
     @Query(value = "SELECT count(*) FROM tweets WHERE parent_id = ?1 AND author_id = ?2", nativeQuery = true)
     int hasUserRepostedTweet(int tweetId, String username);
 
+    // check if a user has quoted a tweet
+    @Query(value = "SELECT count(*) FROM tweets WHERE parent_id = ?1 AND author_id = ?2 AND content IS NOT NULL", nativeQuery = true)
+    int hasUserQuotedTweet(int tweetId, String username);
+
+
     // delete a repost
     @Query(value = "DELETE FROM tweets WHERE parent_id = ?1 AND author_id = ?2", nativeQuery = true)
     void deleteRepost(int tweetId, String username);

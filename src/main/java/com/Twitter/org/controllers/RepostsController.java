@@ -2,11 +2,13 @@ package com.Twitter.org.controllers;
 
 import java.util.List;
 
+import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Quote;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto;
 import com.Twitter.org.mappers.Impl.TweetsMapper;
 import com.Twitter.org.services.Impl.RepostsServiceImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,16 +57,32 @@ public class RepostsController {
 
     // Endpoint to repost a tweet
     @PostMapping(path = "/{username}/reposts/{tweetId}")
-    public TweetsDto repostTweet(@PathVariable("username") String username, @PathVariable("tweetId") int tweetId) {
-        Tweets repostedTweet = repostsService.repostTweet(username, tweetId);
-        return tweetsMapper.mapTo(repostedTweet);
+    public ResponseEntity<Response> repostTweet(@PathVariable("username") String username, @PathVariable("tweetId") int tweetId) {
+        // if user has already reposted the tweet, return the tweet
+        Response response = repostsService.repostTweet(username, tweetId);
+        if (response.isSuccess()) {
+            // Map the Tweets object to a TweetsDto object
+            TweetsDto tweetDto = tweetsMapper.mapTo((Tweets) response.getData());
+            // Set the TweetsDto object to the response data
+            response.setData(tweetDto);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
     // Endpoint to quote a tweet
     @PostMapping(path = "/{username}/quote/{tweetId}")
-    public TweetsDto quoteTweet(@PathVariable("username") String username, @PathVariable("tweetId") int tweetId, @RequestBody Quote comment) {
-        Tweets quotedTweet = repostsService.quoteTweet(username, tweetId, comment.getContent());
-        return tweetsMapper.mapTo(quotedTweet);
+    public ResponseEntity<Response> quoteTweet(@PathVariable("username") String username, @PathVariable("tweetId") int tweetId, @RequestBody Quote comment) {
+        // if user has already Quoted the tweet, return the tweet
+        Response response = repostsService.quoteTweet(username, tweetId, comment.getContent());
+        if (response.isSuccess()) {
+            // Map the Tweets object to a TweetsDto object
+            TweetsDto tweetDto = tweetsMapper.mapTo((Tweets) response.getData());
+            // Set the TweetsDto object to the response data
+            response.setData(tweetDto);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
 
