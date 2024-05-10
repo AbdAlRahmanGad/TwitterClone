@@ -1,5 +1,6 @@
 package com.Twitter.org.controllers;
 
+import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Users.Following;
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Models.dto.FollowingDto;
@@ -7,7 +8,6 @@ import com.Twitter.org.Models.dto.UserDto;
 import com.Twitter.org.mappers.Mapper;
 import com.Twitter.org.services.Impl.FollowingServiceImpl;
 import com.Twitter.org.services.Impl.UserServiceImpl;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -89,17 +89,27 @@ public class FollowingController {
         return followingService.isFollowing(username, userToCheck);
     }
 
-    // TODO(change return message)
     @DeleteMapping(path = "/{username}/deleteFollowing/{userToRemoveFollowing}")
-    public ResponseEntity deleteFollowing(@PathVariable("username") String username, @PathVariable("userToRemoveFollowing") String userToRemoveFollowing) {
-        followingService.removeFollow(username, userToRemoveFollowing);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+    public ResponseEntity<Response> deleteFollowing(@PathVariable("username") String username, @PathVariable("userToRemoveFollowing") String userToRemoveFollowing) {
+        Response response = followingService.removeFollow(username, userToRemoveFollowing);
+        if (response.isSuccess()) {
+            response.setData("success");
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.badRequest().body(response);
     }
 
-    // TODO(change return message)
     @PostMapping(path = "/{username}/addFollowing/{userToAddFollowing}")
-    public ResponseEntity createFollowing(@PathVariable("username") String username, @PathVariable("userToAddFollowing") String userToAddFollowing) {
-        followingService.addFollow(username, userToAddFollowing);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity<Response> createFollowing(@PathVariable("username") String username, @PathVariable("userToAddFollowing") String userToAddFollowing) {
+        Response response = followingService.addFollow(username, userToAddFollowing);
+        if (response.isSuccess()) {
+            response.setData("success");
+            System.out.println(response);
+
+            return ResponseEntity.ok(response);
+
+        }
+        System.out.println(response);
+        return ResponseEntity.badRequest().body(response);
     }
 }
