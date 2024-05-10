@@ -25,13 +25,6 @@ CREATE TABLE mutes
     PRIMARY KEY (muted_id,
                  user_name)
 );
-CREATE TABLE blockedBy
-(
-    user_name      varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
-    who_blocked_me varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
-    PRIMARY KEY (user_name,
-                 who_blocked_me)
-);
 CREATE TABLE blocked
 (
     user_name      varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
