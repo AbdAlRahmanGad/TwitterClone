@@ -45,6 +45,7 @@ CREATE TABLE tweets
     repost_number    integer      DEFAULT 0,
     likes_number     integer      DEFAULT 0,
     is_repost        boolean      DEFAULT FALSE,
+    is_comment       boolean      DEFAULT FALSE,
     original_post    integer      DEFAULT NULL REFERENCES tweets (id) ON DELETE CASCADE,
     PRIMARY KEY (id)
 );

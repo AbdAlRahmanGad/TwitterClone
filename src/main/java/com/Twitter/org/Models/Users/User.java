@@ -47,22 +47,10 @@ public class User {
     @Column(name = "date_joined", nullable = false)
     private LocalDate dateJoined = LocalDate.now();
 
-    @OneToMany(mappedBy = "blocker")
+    @OneToMany(mappedBy = "blocker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Blocks> blockedUsers;
 
-    @OneToMany(mappedBy = "blocked")
+    @OneToMany(mappedBy = "blocked", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Blocks> blockedByUsers;
 
-
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(name = "Following",
-//            joinColumns = @JoinColumn(name = "user_name"),
-//            inverseJoinColumns = @JoinColumn(name = "following_id"))
-//    private List<User> followingUsers = new ArrayList<>();
-//
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    @JoinTable(name = "Mutes",
-//            joinColumns = @JoinColumn(name = "user_name"),
-//            inverseJoinColumns = @JoinColumn(name = "muted_id"))
-//    private Set<User> mutedUsers = new HashSet<User>();
 }
