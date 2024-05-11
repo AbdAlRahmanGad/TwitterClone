@@ -6,22 +6,21 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
 public interface FollowingRepository extends CrudRepository<Following, String> {
 
-    //    @Query(
-//            value = "SELECT following_id FROM Following f WHERE f.user_name = ?1",
-//            nativeQuery = true)
-//    Set<String> GetAllFollowing(String userName);
+
     @Query(
             value = "SELECT * FROM twitter_user WHERE user_name IN (SELECT following_id FROM Following WHERE user_name = ?1)",
             nativeQuery = true)
     List<String> GetAllFollowing(String userName);
 
     // query to remove a follower
+    @Transactional
     @Modifying
     @Query(
             value = "DELETE FROM Following WHERE user_name = ?1 AND following_id = ?2",
@@ -29,6 +28,7 @@ public interface FollowingRepository extends CrudRepository<Following, String> {
     void removeFollow(String userName, String userToFollow);
 
     // query to add a follower
+    @Transactional
     @Modifying
     @Query(
             value = "INSERT INTO Following (user_name, following_id) VALUES (?1, ?2)",

@@ -1,5 +1,6 @@
 package com.Twitter.org.services.Impl;
 
+import com.Twitter.org.Models.Response;
 import com.Twitter.org.Repository.FollowingRepository;
 import com.Twitter.org.services.FollowingService;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,50 @@ public class FollowingServiceImpl implements FollowingService {
     }
 
     @Override
-    public void addFollow(String username, String userToFollow) {
-        followingRepository.addFollower(username, userToFollow);
+    public Response addFollow(String username, String userToFollow) {
+
+        Response response = new Response();
+
+            // check if the user is already following the other user
+            if (username.equals(userToFollow)) {
+                response.setSuccess(false);
+                response.setMessage("Can't Follow youself");
+                return response;
+            }
+            if (followingRepository.isFollowing(username, userToFollow)) {
+                response.setSuccess(false);
+                response.setMessage("Already following " + userToFollow);
+                return response;
+            }
+
+            followingRepository.addFollower(username, userToFollow);
+
+            response.setMessage("Started following " + userToFollow + " successfully");
+            response.setSuccess(true);
+        return response;
     }
 
     @Override
-    public void removeFollow(String username, String userToFollow) {
-        followingRepository.removeFollow(username, userToFollow);
+    public Response removeFollow(String username, String userToUnfollow) {
+
+        Response response = new Response();
+        if (username.equals(userToUnfollow)) {
+            response.setSuccess(false);
+            response.setMessage("Can't Unfollow youself");
+            return response;
+        }
+        // check if the user is already following the other user
+        if (!followingRepository.isFollowing(username, userToUnfollow)) {
+            response.setSuccess(false);
+            response.setMessage("Already not following " + userToUnfollow);
+            return response;
+        }
+
+        followingRepository.removeFollow(username, userToUnfollow);
+
+        response.setMessage("Unfollowed " + userToUnfollow + " successfully");
+        response.setSuccess(true);
+        return response;
     }
 
     @Override
