@@ -5,9 +5,20 @@ import { Posts } from "./components/shared/Posts";
 import { Replies } from "./components/ProfileComponent/Replies";
 import NotificationsPage from "./pages/NotificationsPage";
 import BookmarksPage from "./pages/BookmarksPage";
+import { useEffect } from "react";
 
 // import PageNav from "./components/PageNav";
 function App() {
+  useEffect(()=>{
+    (async ()=>{
+        try{
+            const res=await fetch("https://localhost:8080");
+
+        }catch(error){
+          console.log(error);
+        }
+    })()
+  }, [])
   return (
     <>
       {/* <PageNav /> */}
