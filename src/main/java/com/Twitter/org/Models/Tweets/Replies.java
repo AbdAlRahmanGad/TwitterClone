@@ -1,30 +1,26 @@
 package com.Twitter.org.Models.Tweets;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import jakarta.persistence.*;
-import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "Replies")
-@IdClass(Replies.RepliesId.class)
+@IdClass(RepliesId.class)
+@AllArgsConstructor
 public class Replies {
 
     @Id
-    @Column(name = "post_id", nullable = false)
-    private Integer postId;
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private Tweets post;
 
     @Id
-    @Column(name = "reply_id", nullable = false)
-    private Integer replyId;
+    @ManyToOne
+    @JoinColumn(name = "reply_id", referencedColumnName = "id")
+    private Tweets reply;
 
-    @Data
-    @NoArgsConstructor
-    public static class RepliesId implements Serializable {
-        private Integer postId;
-        private Integer replyId;
-    }
 }

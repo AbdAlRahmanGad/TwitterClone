@@ -1,11 +1,11 @@
 package com.Twitter.org.Models.dto;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -13,31 +13,33 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TweetsDto {
 
-        private Integer id;
+    private Integer id;
 
-        private LocalDateTime dateTweeted;
+    private LocalDateTime dateTweeted;
 
-        private String authorId;
+    private String authorId;
 
-        private Integer parentId;
+    private Integer parentId;
 
-        private String content;
+    private String content;
 
-        private byte[] media;
+    private byte[] media;
 
-        @Builder.Default
-        private Integer bookmarksNumber = 0;
+    @Builder.Default
+    private Integer bookmarksNumber = 0;
 
-        @Builder.Default
-        private Integer repliesNumber = 0;
+    @Builder.Default
+    private Integer repliesNumber = 0;
 
-        @Builder.Default
-        private Integer likesNumber = 0;
+    @Builder.Default
+    private Integer likesNumber = 0;
 
-        @Builder.Default
-        private Integer repostNumber = 0;
+    @Builder.Default
+    private Integer repostNumber = 0;
 
-        private Boolean repost;
+    private Boolean repost;
 
-        private Integer originalPost;
+    private Boolean comment;
+
+    private Integer originalPost;
 }

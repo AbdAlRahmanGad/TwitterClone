@@ -63,6 +63,9 @@ public class Tweets {
     @Column(name = "is_repost")
     private Boolean repost;
 
+    @Column(name = "is_comment")
+    private Boolean comment;
+
     @Column(name = "original_post")
     private Integer originalPost;
 
@@ -73,4 +76,8 @@ public class Tweets {
     // One to many with Bookmarks, One tweet can have many bookmarks
     @OneToMany(mappedBy = "tweetId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Bookmarks> bookmarks;
+
+    // One to many with Replies, One tweet can have many replies
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Replies> replies;
 }
