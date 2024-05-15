@@ -48,7 +48,7 @@ public class RepostsServiceImpl implements RepostsService {
             Tweets repost = new Tweets().
                     builder()
                     .authorId(username)
-                    .parentId(tweetId)
+                    .parentId(tweetId) // TODO: parentId should be null
                     .repost(true)
                     .originalPost(tweetId)
                     .build();
@@ -88,7 +88,7 @@ public class RepostsServiceImpl implements RepostsService {
             Tweets quote = new Tweets().
                     builder()
                     .authorId(username)
-                    .parentId(tweetId)
+                    .parentId(tweetId) // TODO: parentId should be null
                     .repost(true)
                     .content(comment)
                     .originalPost(tweetId)
