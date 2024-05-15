@@ -1,6 +1,7 @@
 package com.Twitter.org.Repository;
 
 import com.Twitter.org.Models.Tweets.Tweets;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -11,14 +12,24 @@ import java.util.List;
 public interface TweetsRepository extends CrudRepository<Tweets, Integer> {
 
 
-    // Tweets findByTweetId(int tweetId);
+    // Get all tweets created by a user
     List<Tweets> findByAuthorId(String username);
 
-    // GetAllTweetsForFollowingHomeFeed
-    // implement get all tweets from poeople whome user follows
+    // Get all tweets from people whom user follows, excluding muted users
+    @Query(value = "SELECT t.* FROM tweets t " +
+                   "JOIN following f ON t.author_id = f.following_id " +
+                   "LEFT JOIN mutes m ON t.author_id = m.muted_id " +
+                   "WHERE f.user_name = ?1 AND (m.user_name IS NULL OR m.user_name != ?1)", nativeQuery = true)
+    List<Tweets> findAllTweetsFromFollowedUsersExcludingMuted(String username);
 
-    @Query(value = "SELECT t.* FROM tweets t WHERE author_id  IN ( SELECT following.following_id from following WHERE user_name = ?1)", nativeQuery = true)
-    List<String> findAllTweetsFromUserFollowing(String username);
+
+    // Get all tweets available (all tweets from all users excluding muted and blocked users)
+    @Query(value = "SELECT t.* FROM tweets t " +
+                   "LEFT JOIN mutes m ON t.author_id = m.muted_id " +
+                   "LEFT JOIN blocked b ON t.author_id = b.whom_i_blocked " +
+                   "WHERE (m.user_name IS NULL OR m.user_name != ?1) AND (b.user_name IS NULL OR b.user_name != ?1)", nativeQuery = true)
+    List<Tweets> GetAllTweetsAvailableExcludingMutedAndBlocked(String username);
+
 
     /**
      * reposts
@@ -39,6 +50,7 @@ public interface TweetsRepository extends CrudRepository<Tweets, Integer> {
 
 
     // delete a repost
+    @Modifying
     @Query(value = "DELETE FROM tweets WHERE parent_id = ?1 AND author_id = ?2", nativeQuery = true)
     void deleteRepost(int tweetId, String username);
 

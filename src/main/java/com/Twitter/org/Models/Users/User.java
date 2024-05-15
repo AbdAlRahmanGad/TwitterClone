@@ -10,6 +10,7 @@ import org.hibernate.annotations.JdbcType;
 import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 //@JdbcTypeCode(Types.VARBINARY)
@@ -48,9 +49,9 @@ public class User {
     private LocalDate dateJoined = LocalDate.now();
 
     @OneToMany(mappedBy = "blocker", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Blocks> blockedUsers;
+    private List<Blocks> blockedUsers = new ArrayList<>();
 
     @OneToMany(mappedBy = "blocked", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Blocks> blockedByUsers;
+    private List<Blocks> blockedByUsers = new ArrayList<>();
 
 }
