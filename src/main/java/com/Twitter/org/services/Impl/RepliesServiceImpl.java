@@ -1,7 +1,7 @@
 package com.Twitter.org.services.Impl;
 
 import com.Twitter.org.Models.Response;
-import com.Twitter.org.Models.Tweets.Replies;
+import com.Twitter.org.Models.Tweets.Replies.Replies;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Repository.RepliesRepository;
 import com.Twitter.org.Repository.TweetsRepository;
