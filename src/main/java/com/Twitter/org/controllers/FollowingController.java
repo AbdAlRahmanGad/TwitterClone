@@ -1,7 +1,7 @@
 package com.Twitter.org.controllers;
 
 import com.Twitter.org.Models.Response;
-import com.Twitter.org.Models.Users.Following;
+import com.Twitter.org.Models.Users.Following.Following;
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Models.dto.FollowingDto;
 import com.Twitter.org.Models.dto.UserDto;

@@ -1,7 +1,7 @@
 package com.Twitter.org.Repository;
 
 
-import com.Twitter.org.Models.Users.Following;
+import com.Twitter.org.Models.Users.Following.Following;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
