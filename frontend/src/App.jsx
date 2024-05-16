@@ -5,9 +5,8 @@ import { Posts } from "./components/shared/Posts";
 import { Replies } from "./components/ProfileComponent/Replies";
 import NotificationsPage from "./pages/NotificationsPage";
 import BookmarksPage from "./pages/BookmarksPage";
+import PopMenu from "./components/PopMenu/PopMenu";
 import { PostProvider } from "./contexts/PostContext";
-// import { useEffect } from "react";
-
 // import PageNav from "./components/PageNav";
 function App() {
   return (
@@ -29,6 +28,7 @@ function App() {
             </Route>
             <Route path="bookmarks" element={<BookmarksPage />} />
             <Route path="notifications" element={<NotificationsPage />} />
+            <Route path="messages" element={<PopMenu />} />
           </Routes>
         </BrowserRouter>
       </PostProvider>
