@@ -1,6 +1,6 @@
 package com.Twitter.org.mappers.Impl;
 
-import com.Twitter.org.Models.Users.Following.Following;
+import com.Twitter.org.Models.Users.Following;
 import com.Twitter.org.Models.dto.FollowingDto;
 import com.Twitter.org.mappers.Mapper;
 import org.modelmapper.ModelMapper;
