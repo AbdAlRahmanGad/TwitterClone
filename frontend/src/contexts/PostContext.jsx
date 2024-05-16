@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 const temp = {
   userName: "user1",
   firstName: "User",
@@ -19,15 +19,16 @@ function PostProvider({ children }) {
     async function fetchAllTweets() {
       try {
         if (tweetsUpdated) return;
-        const res = await fetch("/api/home/allTweets");
+        const res = await fetch("/api/tweets");
 
         // Check if the response is okay
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
-
+        console.log(res);
         const data = await res.json();
         console.log(data);
+        setTweets(data);
         setTweetsUpdated(true);
       } catch (e) {
         console.error("Fetch error:", e);
@@ -39,17 +40,22 @@ function PostProvider({ children }) {
 
   async function handleAddTweet(tweetObj) {
     try {
-      const res = await fetch("/api/status/createTweet", {
+      const res = await fetch("/api/tweets", {
         method: "POST",
-        body: JSON.stringify({
-          tweetObj,
-        }),
         headers: {
-          Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(tweetObj),
       });
-      console.log(res);
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("Error response:", errorData);
+        throw new Error(`Server error: ${res.status} - ${res.statusText}`);
+      }
+
+      const responseData = await res.json();
+      console.log("Response data:", responseData);
     } catch (error) {
       console.error("add Tweet error:", error);
     }
