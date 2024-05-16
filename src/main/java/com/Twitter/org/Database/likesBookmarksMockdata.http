@@ -1,0 +1,25 @@
+POST http://localhost:8080/user3/bookmarks/1
+###
+POST http://localhost:8080/user2/bookmarks/4
+###
+POST http://localhost:8080/user4/bookmarks/6
+###
+POST http://localhost:8080/user5/bookmarks/9
+###
+POST http://localhost:8080/user2/tweets/1/likes
+###
+POST http://localhost:8080/user3/tweets/1/likes
+###
+POST http://localhost:8080/user1/tweets/2/likes
+###
+POST http://localhost:8080/user1/tweets/4/likes
+###
+POST http://localhost:8080/user3/tweets/4/likes
+###
+POST http://localhost:8080/user1/tweets/6/likes
+###
+POST http://localhost:8080/user2/tweets/6/likes
+###
+POST http://localhost:8080/user2/tweets/9/likes
+###
+POST http://localhost:8080/user4/tweets/9/likes
