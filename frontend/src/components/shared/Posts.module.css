@@ -25,3 +25,37 @@
   font-size: 22px;
 }
 
+.postBar {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  margin-bottom: -1rem;
+  color: var(--color-white-1);
+}
+
+.postBar svg {
+  width: 31.25px;
+  fill: var(--color-white-1);
+}
+
+.item {
+  border: none;
+  outline: none;
+  background-color: black;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--color-white-1);
+}
+.item:hover span,
+.item-liked span {
+  color: var(--color-brand-0);
+}
+
+.item:hover svg,
+.item-liked svg {
+  fill: var(--color-brand-0);
+}
