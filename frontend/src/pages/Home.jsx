@@ -6,7 +6,6 @@ import { Posts } from "../components/shared/Posts";
 import PageWhatsHappening from "../components/PageWhat'sHappening/PageWhatsHappening";
 
 export default function Home() {
- 
   return (
     <main className="main">
       <PageNav />

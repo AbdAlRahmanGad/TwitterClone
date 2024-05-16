@@ -3,8 +3,8 @@ import PageNav from "../components/PageNav";
 import Suggestions from "../components/SuggestionsComponent/Suggestions";
 import { ProfileHeader } from "../components/ProfileComponent/ProfileHeader";
 import { ProfileHero } from "../components/ProfileComponent/ProfileHero";
-import  ProfileNav  from "../components/ProfileComponent/ProfileNav/ProfileNav";
-import { Outlet } from "react-router-dom";
+import ProfileNav from "../components/ProfileComponent/ProfileNav/ProfileNav";
+import { Outlet, useParams } from "react-router-dom";
 
 import style from "./ProfilePage.module.css";
 

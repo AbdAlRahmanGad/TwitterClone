@@ -1,4 +1,4 @@
-@import url("./../index.css");
+@import url("/src/index.css");
 .nav {
   gap: 2rem;
   background-color: var(--color-dark-0);
@@ -39,4 +39,22 @@
   .nav ul a span {
     display: none;
   }
+}
+
+.nav ul a.post-btn {
+  padding: 0.5rem;
+  border-radius: 19px;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  font-size: 19px;
+  width: 90%;
+  background: var(--color-brand-0);
+  margin-top: 1rem;
+  margin-left: 24px;
+}
+
+.nav ul a.post-btn span {
+  color: var(--color-white-0);
+  margin: auto;
 }

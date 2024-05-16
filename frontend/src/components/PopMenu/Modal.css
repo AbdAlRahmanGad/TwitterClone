@@ -1,60 +1,84 @@
 body.active-modal {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 .btn-modal {
-    padding: 10px 20px;
-    display: block;
-    margin: 100px auto 0;
-    font-size: 18px;
+  padding: 10px 20px;
+  display: block;
+  margin: 100px auto 0;
+  font-size: 18px;
 }
 
-.modal, .overlay {
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
+.modal,
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
 }
 
 .overlay {
-    opacity: .3;
+  opacity: 0.3;
 }
 .modal-content {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-    line-height: 1.4;
-    background: #f1f1f1;
-    padding: 14px 28px;
-    border-radius: 3px;
-    max-width: 600px;
-    min-width: 300px;
-    background-color: rgb(30, 30, 30);
-    display: flex;
-    flex-direction: column;
-    gap: 5rem;
+  line-height: 1.4;
+  background: #f1f1f1;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 300px;
+  background-color: rgb(30, 30, 30);
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  width: 600px;
+  border-radius: 22px;
 }
 
 .close-modal {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px 7px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 7px;
 }
-.input-field{
-    height: 40px;
-    background-color: rgb(30, 30, 30);
-    border: 0;
-    color: white;
+.input-field {
+  height: 40px;
+  background-color: rgb(30, 30, 30);
+  border: 0;
+  color: white;
 }
-.icon{
-    background-color: rgb(29, 155, 240);
-    width: 20px;
-    height: 20px;
-    margin: 0 8px;
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.iconsContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.icon {
+  fill: rgb(29, 155, 240);
+  width: 30px;
+  height: 30px;
+  margin: 0 8px;
+}
+
+.post-btn {
+  padding: 0.7rem 2rem;
+  border-radius: 19px;
+  border: none;
+  outline: none;
+  background: var(--color-brand-0);
+  color: var(--color-white-0);
+  font-weight: bold;
+  font-size: 19px;
 }

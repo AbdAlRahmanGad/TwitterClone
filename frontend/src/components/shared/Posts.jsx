@@ -14,7 +14,7 @@ export function Posts() {
 }
 
 function Post({ tweet }) {
-  console.log(tweet);
+  // console.log(tweet);
   const { content, authorId, dateTweeted } = tweet;
   return (
     <div className={style.post}>

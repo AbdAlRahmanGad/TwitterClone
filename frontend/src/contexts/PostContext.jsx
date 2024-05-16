@@ -25,9 +25,9 @@ function PostProvider({ children }) {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
-        console.log(res);
+        // console.log(res);
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         setTweets(data);
         setTweetsUpdated(true);
       } catch (e) {
@@ -55,7 +55,9 @@ function PostProvider({ children }) {
       }
 
       const responseData = await res.json();
-      console.log("Response data:", responseData);
+      // console.log(responseData);
+      setTweets((t) => [responseData, ...t]);
+      // console.log("Response data:", responseData);
     } catch (error) {
       console.error("add Tweet error:", error);
     }
