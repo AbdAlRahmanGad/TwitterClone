@@ -4,8 +4,9 @@ import { AppNav } from "../components/shared/AppNav";
 import Suggestions from "../components/SuggestionsComponent/Suggestions";
 import { Posts } from "../components/shared/Posts";
 import PageWhatsHappening from "../components/PageWhat'sHappening/PageWhatsHappening";
-// import style from './../components/ProfileComponent/ProfileNav/ProfileNav.jsx';
+
 export default function Home() {
+ 
   return (
     <main className="main">
       <PageNav />
