@@ -1,0 +1,18 @@
+.person img {
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+}
+
+.person > div {
+  margin-top: 1rem;
+}
+
+.username {
+  color: var(--color-white-0);
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.subTitle {
+  color: var(--color-white-1);
+}

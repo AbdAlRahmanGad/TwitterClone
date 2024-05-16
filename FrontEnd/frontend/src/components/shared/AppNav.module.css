@@ -1,0 +1,9 @@
+@import url("./../../index.css");
+.nav {
+    flex: 1;
+    display: flex;
+    border-bottom: var(--border);
+    align-items: center;
+    text-align: center;
+    background-color: var(--color-dark-0);
+}

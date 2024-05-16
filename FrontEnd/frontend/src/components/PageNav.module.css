@@ -1,0 +1,60 @@
+@import url("/src/index.css");
+.nav {
+  gap: 2rem;
+  background-color: var(--color-dark-0);
+  color: var(--color-white-0);
+  padding-top: 2rem;
+}
+.nav .logo {
+  align-self: start;
+  width: 45px;
+  fill: var(--color-white-0);
+  margin-left: 38px;
+}
+.nav ul a {
+  color: var(--color-white-0);
+  display: flex;
+  align-items: end;
+  gap: 0.5rem;
+  border-radius: 46px;
+  padding: 1rem 2rem;
+  width: fit-content;
+  transition: background-color 0.3s ease-in-out;
+}
+.nav ul a:hover {
+  background-color: var(--color-dark-1);
+}
+:global(.active) {
+  font-weight: bold;
+  color: var(--color-brand-0);
+}
+.nav ul svg {
+  width: 35px;
+  fill: var(--color-white-0);
+}
+.nav ul a span {
+  font-size: 24px;
+}
+@media (max-width: 1200px) {
+  .nav ul a span {
+    display: none;
+  }
+}
+
+.nav ul a.post-btn {
+  padding: 0.5rem;
+  border-radius: 19px;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  font-size: 19px;
+  width: 90%;
+  background: var(--color-brand-0);
+  margin-top: 1rem;
+  margin-left: 24px;
+}
+
+.nav ul a.post-btn span {
+  color: var(--color-white-0);
+  margin: auto;
+}

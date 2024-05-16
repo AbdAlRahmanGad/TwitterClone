@@ -1,0 +1,74 @@
+/* section(flex) */
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
+}
+.dir-col {
+  flex-direction: column;
+}
+.juc-between {
+  justify-content: space-between;
+}
+.align-center {
+  align-items: center;
+}
+.align-start {
+  align-items: start;
+}
+.align-end {
+  align-items: end;
+}
+/* section(gap) */
+.gap-1 {
+  gap: 1rem;
+}
+.gap-2 {
+  gap: 2rem;
+}
+/* section(margin) */
+.mt-10 {
+  margin-top: 10px;
+}
+.mt-2 {
+  margin-top: 2rem;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+.mr-15 {
+  margin-right: 15px;
+}
+.ml-15 {
+  margin-left: 15px;
+}
+/* section(padding) */
+.pt-10 {
+  padding-top: 10px;
+}
+.pb-10 {
+  padding-bottom: 10px;
+}
+.pl-15 {
+  padding-left: 15px;
+}
+.pr-15 {
+  padding-right: 15px;
+}
+
+/* section(border) */
+.border-rl {
+  border-right: var(--border);
+  border-left: var(--border);
+}
+/* section(btn) */
+.btn {
+  border-radius: 15px;
+  padding: 0.5rem 1rem;
+  align-self: center;
+}
+.btn-light {
+  background-color: var(--color-white-0);
+  color: var(--color-dark-0);
+}
