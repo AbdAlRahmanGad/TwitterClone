@@ -23,7 +23,7 @@ function App() {
                 <Route index path="for_you" element={<h1>For Your Page</h1>} />
                 <Route path="following" element={<h1>Follwoing Page</h1>} />
               </Route>
-              <Route path="profile" element={<ProfilePage />}>
+              <Route path="profile/:id" element={<ProfilePage />}>
                 <Route index element={<Navigate to={"posts"} />} />
                 <Route index path="posts" element={<Posts />} />
                 <Route path="replies" element={<Replies />} />

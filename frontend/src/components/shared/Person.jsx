@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import style from "./Person.module.css";
 export function Person({ user }) {
   if (!user) {
     return (
-      <li className={`${style.person} flex juc-between`}>
+      <Link to={"/profile/user1"} className={`${style.person} flex juc-between`}>
         <div className="flex align-center gap-1">
           <img src={`/user1.png`} alt="" />
           <div className="">
@@ -11,13 +12,13 @@ export function Person({ user }) {
           </div>
         </div>
         <button className="btn btn-light">follow</button>
-      </li>
+      </Link>
     );
   }
   const { userName, firstName, lastName } = user;
 
   return (
-    <li className={`${style.person} flex juc-between`}>
+    <Link to={`/profile/${userName}`} className={`${style.person} flex juc-between`}>
       <div className="flex align-center gap-1">
         <img src={`/${userName}.png`} alt="" />
         <div className="">
@@ -28,6 +29,6 @@ export function Person({ user }) {
         </div>
       </div>
       <button className="btn btn-light">follow</button>
-    </li>
+    </Link>
   );
 }

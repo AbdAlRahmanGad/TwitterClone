@@ -1,8 +1,14 @@
+import { useParams } from "react-router-dom";
 import { formatDate } from "../../functions/formatDate";
 import style from "./ProfileHero.module.css";
-export function ProfileHero({ user }) {
-  // const {id}=useParams();
-  if (!user) {
+import { useUser } from "../../contexts/UserContext";
+export function ProfileHero() {
+  const { id } = useParams();
+  const { users } = useUser();
+  console.log(id);
+  const user = users.find((user) => user.userName === id);
+
+  if (!user || id === "user1") {
     return (
       <section className={style.hero}>
         <div className={style.backgroundCover}></div>
@@ -41,7 +47,7 @@ export function ProfileHero({ user }) {
           {firstName} {lastName}
         </h3>
         <p className={style.subTitle}>@{userName}</p>
-        <p className={style.subTitle}>{bio}</p>
+        <p className={`${style.subTitle} mt-1`}>{bio}</p>
 
         <p className={`${style.subTitle} ${style.date} mt-10 mb-10`}>
           Joined {formatDate(dateJoined)}{" "}
