@@ -1,5 +1,7 @@
 package com.Twitter.org.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.Twitter.org.Models.Users.User;
@@ -30,31 +32,31 @@ public class UserController {
     }
 
     // create a new user
-@PostMapping(path = "/createUser")
-public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-    User user = userMapper.mapFrom(userDto);
-    User savedUser = userService.save(user);
-    return new ResponseEntity<>(userMapper.mapTo(savedUser), HttpStatus.CREATED);
-}
+    @PostMapping(path = "/createUser")
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
+        User user = userMapper.mapFrom(userDto);
+        User savedUser = userService.save(user);
+        return new ResponseEntity<>(userMapper.mapTo(savedUser), HttpStatus.CREATED);
+    }
 
-// delete a user
-@DeleteMapping(path = "/{username}")
-public ResponseEntity deleteUser(@PathVariable("username") String username) {
-    userService.delete(username);
-    return new ResponseEntity(HttpStatus.NO_CONTENT);
-}
+    // delete a user
+    @DeleteMapping(path = "/{username}")
+    public ResponseEntity deleteUser(@PathVariable("username") String username) {
+        userService.delete(username);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 
-// TODO on delete cascade for dependancies
+    // TODO on delete cascade for dependancies
 
-// get a user
-@GetMapping(path = "/{username}")
-public ResponseEntity<UserDto> getUser(@PathVariable("username") String username) {
-    Optional<User> foundUser = Optional.ofNullable(userService.findUserByUsername(username));
-    return foundUser.map(user -> {
-        UserDto userDto = userMapper.mapTo(user);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
-    }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-}
+    // get a user
+    @GetMapping(path = "/{username}")
+    public ResponseEntity<UserDto> getUser(@PathVariable("username") String username) {
+        Optional<User> foundUser = Optional.ofNullable(userService.findUserByUsername(username));
+        return foundUser.map(user -> {
+            UserDto userDto = userMapper.mapTo(user);
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     @PutMapping(path = "/{username}")
     public ResponseEntity<UserDto> fullUpdateUser(
@@ -73,6 +75,14 @@ public ResponseEntity<UserDto> getUser(@PathVariable("username") String username
         return new ResponseEntity<>(
                 userMapper.mapTo(savedUserEntity),
                 HttpStatus.OK);
+    }
+    /// get all users
+    @GetMapping(path = "/allUsers")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        Iterable<User> users = userService.findAll();
+        List<UserDto> userDtos = new ArrayList<>();
+        users.forEach(user -> userDtos.add(userMapper.mapTo(user)));
+        return userDtos.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(userDtos, HttpStatus.OK);
     }
 
 }
