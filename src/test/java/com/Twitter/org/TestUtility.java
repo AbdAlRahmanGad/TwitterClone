@@ -2,7 +2,7 @@ package com.Twitter.org;
 
 import java.time.LocalDate;
 
-import com.Twitter.org.Models.Users.Following.Following;
+import com.Twitter.org.Models.Users.Following;
 import com.Twitter.org.Models.Users.User;
 
 public class TestUtility {

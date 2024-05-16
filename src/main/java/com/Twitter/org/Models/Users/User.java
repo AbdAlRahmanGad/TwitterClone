@@ -1,7 +1,6 @@
 package com.Twitter.org.Models.Users;
 
 import com.Twitter.org.Models.Users.Blocks.Blocks;
-import com.Twitter.org.Models.Users.Following.Following;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,8 +53,5 @@ public class User {
 
     @OneToMany(mappedBy = "blocked", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Blocks> blockedByUsers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Following> following = new ArrayList<>();
 
 }
