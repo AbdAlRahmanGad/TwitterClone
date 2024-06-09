@@ -35,6 +35,9 @@ public class User {
     @Column(name = "bio")
     private String bio;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
 
     @JdbcType(VarbinaryJdbcType.class)
     //@Type(type = "org.hibernate.type.BinaryType")

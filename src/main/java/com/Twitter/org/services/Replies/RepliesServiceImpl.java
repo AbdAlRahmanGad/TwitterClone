@@ -1,4 +1,4 @@
-package com.Twitter.org.services.Impl;
+package com.Twitter.org.services.Replies;
 
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Replies;
@@ -6,7 +6,6 @@ import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Repository.RepliesRepository;
 import com.Twitter.org.Repository.TweetsRepository;
 import com.Twitter.org.mappers.Impl.TweetsMapper;
-import com.Twitter.org.services.RepliesService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

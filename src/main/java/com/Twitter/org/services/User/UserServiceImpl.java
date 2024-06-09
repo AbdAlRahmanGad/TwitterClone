@@ -1,9 +1,8 @@
-package com.Twitter.org.services.Impl;
+package com.Twitter.org.services.User;
 
 
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Repository.UserRepository;
-import com.Twitter.org.services.UserService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

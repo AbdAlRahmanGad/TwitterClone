@@ -1,4 +1,4 @@
-package com.Twitter.org.services;
+package com.Twitter.org.services.Following;
 
 import java.util.List;
 

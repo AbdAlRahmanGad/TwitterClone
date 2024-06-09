@@ -7,7 +7,7 @@ import com.Twitter.org.Models.Tweets.Quote;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto;
 import com.Twitter.org.mappers.Impl.TweetsMapper;
-import com.Twitter.org.services.Impl.RepostsServiceImpl;
+import com.Twitter.org.services.Reposts.RepostsServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

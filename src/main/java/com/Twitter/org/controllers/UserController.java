@@ -7,7 +7,7 @@ import java.util.Optional;
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Models.dto.UserDto;
 import com.Twitter.org.mappers.Mapper;
-import com.Twitter.org.services.Impl.UserServiceImpl;
+import com.Twitter.org.services.User.UserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

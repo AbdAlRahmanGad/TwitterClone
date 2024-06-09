@@ -5,7 +5,7 @@ import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto;
 import com.Twitter.org.Models.dto.UserDto;
 import com.Twitter.org.mappers.Impl.TweetsMapper;
-import com.Twitter.org.services.LikesService;
+import com.Twitter.org.services.Likes.LikesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

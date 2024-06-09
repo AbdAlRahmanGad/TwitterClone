@@ -3,9 +3,10 @@ package com.Twitter.org.controllers;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto;
 import com.Twitter.org.mappers.Mapper;
-import com.Twitter.org.services.Impl.TweetsServiceImpl;
+import com.Twitter.org.services.Tweets.TweetsServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +26,13 @@ public class TweetsController {
     // Create a new tweet
     @PostMapping("/tweets")
     public ResponseEntity<TweetsDto> createTweet(@RequestBody TweetsDto tweetDto) {
+        // Get the authenticated user's details
+        org.springframework.security.core.userdetails.UserDetails userDetails = (org.springframework.security.core.userdetails.UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+
+        // Set the authorId of the tweet to the authenticated user's username
+        tweetDto.setAuthorId(username);
+
         Tweets tweet = tweetsMapper.mapFrom(tweetDto);
         Tweets createdTweet = tweetsService.newTweet(tweet);
         return new ResponseEntity<>(tweetsMapper.mapTo(createdTweet), HttpStatus.CREATED);

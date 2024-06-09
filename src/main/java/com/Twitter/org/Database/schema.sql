@@ -1,6 +1,7 @@
 CREATE TABLE twitter_user
 (
     user_name   character varying(32) NOT NULL,
+    password    character varying(255) NOT NULL,
     bio         character varying(255)         DEFAULT '',
     cover_pic   bytea                          DEFAULT NULL,
     profile_pic bytea                          DEFAULT NULL,

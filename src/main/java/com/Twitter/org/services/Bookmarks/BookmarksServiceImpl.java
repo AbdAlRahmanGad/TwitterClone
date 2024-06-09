@@ -1,4 +1,4 @@
-package com.Twitter.org.services.Impl;
+package com.Twitter.org.services.Bookmarks;
 
 import com.Twitter.org.Models.Tweets.Bookmarks.Bookmarks;
 import com.Twitter.org.Models.Tweets.Bookmarks.BookmarksId;
@@ -6,7 +6,6 @@ import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Repository.BookmarksRepository;
 import com.Twitter.org.Repository.TweetsRepository;
-import com.Twitter.org.services.BookmarksService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

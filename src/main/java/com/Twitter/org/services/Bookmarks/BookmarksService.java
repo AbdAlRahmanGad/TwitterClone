@@ -1,4 +1,4 @@
-package com.Twitter.org.services;
+package com.Twitter.org.services.Bookmarks;
 
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;

@@ -1,8 +1,7 @@
-package com.Twitter.org.services.Impl;
+package com.Twitter.org.services.Following;
 
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Repository.FollowingRepository;
-import com.Twitter.org.services.FollowingService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

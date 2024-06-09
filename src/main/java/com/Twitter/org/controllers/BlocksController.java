@@ -4,7 +4,7 @@ import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Models.dto.UserDto;
 import com.Twitter.org.mappers.Impl.UserMapper;
-import com.Twitter.org.services.BlocksService;
+import com.Twitter.org.services.Blocks.BlocksService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

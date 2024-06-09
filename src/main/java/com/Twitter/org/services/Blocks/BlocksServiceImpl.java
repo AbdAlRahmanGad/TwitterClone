@@ -1,13 +1,13 @@
-package com.Twitter.org.services.Impl;
+package com.Twitter.org.services.Blocks;
 
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Users.Blocks.Blocks;
 import com.Twitter.org.Models.Users.Blocks.BlocksId;
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Repository.BlocksRepository;
-import com.Twitter.org.services.BlocksService;
-import com.Twitter.org.services.FollowingService;
-import com.Twitter.org.services.UserService;
+import com.Twitter.org.services.Following.FollowingService;
+import com.Twitter.org.services.User.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

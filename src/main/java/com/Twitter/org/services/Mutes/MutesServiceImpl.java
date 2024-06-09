@@ -1,11 +1,11 @@
-package com.Twitter.org.services.Impl;
+package com.Twitter.org.services.Mutes;
 
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Users.Mutes.Mutes;
 import com.Twitter.org.Models.Users.Mutes.MutesId;
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Repository.MutesRepository;
-import com.Twitter.org.services.MutesService;
+import com.Twitter.org.services.User.UserServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

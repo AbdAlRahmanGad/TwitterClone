@@ -1,4 +1,4 @@
-package com.Twitter.org.services;
+package com.Twitter.org.services.Tweets;
 
 import com.Twitter.org.Models.Tweets.Tweets;
 

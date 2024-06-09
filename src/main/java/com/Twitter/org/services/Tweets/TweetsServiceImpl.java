@@ -1,8 +1,7 @@
-package com.Twitter.org.services.Impl;
+package com.Twitter.org.services.Tweets;
 
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Repository.TweetsRepository;
-import com.Twitter.org.services.TweetsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

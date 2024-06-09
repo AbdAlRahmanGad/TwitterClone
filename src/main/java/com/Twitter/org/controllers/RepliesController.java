@@ -4,7 +4,7 @@ import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto;
 import com.Twitter.org.mappers.Mapper;
-import com.Twitter.org.services.RepliesService;
+import com.Twitter.org.services.Replies.RepliesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

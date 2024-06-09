@@ -1,4 +1,4 @@
-package com.Twitter.org.services.Impl;
+package com.Twitter.org.services.Likes;
 
 import com.Twitter.org.Models.Tweets.Likes.Likes;
 import com.Twitter.org.Models.Response;
@@ -6,7 +6,6 @@ import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Repository.LikesRepository;
 import com.Twitter.org.Repository.TweetsRepository;
-import com.Twitter.org.services.LikesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
