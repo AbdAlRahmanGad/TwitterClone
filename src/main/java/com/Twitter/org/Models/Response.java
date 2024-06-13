@@ -16,9 +16,9 @@ public class Response {
         this.data = null;
     }
 
-    public Response(boolean b, String youCannotBlockYourself) {
-        this.success = b;
-        this.message = youCannotBlockYourself;
+    public Response(boolean status, String msg) {
+        this.success = status;
+        this.message = msg;
         this.data = null;
     }
 }

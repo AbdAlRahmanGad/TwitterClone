@@ -1,6 +1,5 @@
-package com.Twitter.org.Models.dto;
+package com.Twitter.org.Models.dto.UserDto;
 
-import com.Twitter.org.Models.Users.User;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +12,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserCreateDto {
 
     @NotEmpty
     private String userName;
@@ -34,15 +33,4 @@ public class UserDto {
     private byte[] coverPic;
 
     private LocalDate dateJoined = LocalDate.now();
-
-    public UserDto(User user) {
-        this.userName = user.getUserName();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.bio = user.getBio();
-        this.profilePic = user.getProfilePic();
-        this.coverPic = user.getCoverPic();
-        this.dateJoined = user.getDateJoined();
-        this.password = user.getPassword();
-    }
 }

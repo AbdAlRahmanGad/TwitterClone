@@ -2,8 +2,8 @@ package com.Twitter.org.controllers;
 
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Users.User;
-import com.Twitter.org.Models.dto.UserDto;
-import com.Twitter.org.mappers.Impl.UserMapper;
+import com.Twitter.org.Models.dto.UserDto.UserResponseDto;
+import com.Twitter.org.mappers.Impl.UserMapper.UserResponseMapper;
 import com.Twitter.org.services.Mutes.MutesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/mutes")
 public class MutesController {
     private final MutesService mutesService;
-    private final UserMapper userMapper;
+    private final UserResponseMapper userMapper;
 
-    public MutesController(MutesService mutesService, UserMapper userMapper) {
+    public MutesController(MutesService mutesService, UserResponseMapper userMapper) {
         this.mutesService = mutesService;
         this.userMapper = userMapper;
     }
@@ -41,7 +41,7 @@ public class MutesController {
     }
 
     @GetMapping("/{userName}")
-    public List<UserDto> getMutedUsers(@PathVariable String userName) {
+    public List<UserResponseDto> getMutedUsers(@PathVariable String userName) {
         List<User> users = mutesService.getMutedUsers(userName);
         return users.stream().map(userMapper::mapTo).collect(Collectors.toList());
     }
@@ -62,7 +62,7 @@ public class MutesController {
     }
 
     @GetMapping("/{mutedId}/users")
-    public List<UserDto> getUsersWhoMutedUser(@PathVariable String mutedId) {
+    public List<UserResponseDto> getUsersWhoMutedUser(@PathVariable String mutedId) {
         List<User> users = mutesService.getUsersWhoMutedUser(mutedId);
         return users.stream().map(userMapper::mapTo).collect(Collectors.toList());
     }

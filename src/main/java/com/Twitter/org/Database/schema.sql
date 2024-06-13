@@ -1,22 +1,24 @@
 CREATE TABLE twitter_user
 (
-    user_name   character varying(32) NOT NULL,
+    user_name   character varying(32)  NOT NULL,
     password    character varying(255) NOT NULL,
-    bio         character varying(255)         DEFAULT '',
-    cover_pic   bytea                          DEFAULT NULL,
-    profile_pic bytea                          DEFAULT NULL,
-    first_name  character varying(40) NOT NULL,
-    last_name   character varying(40) NOT NULL,
-    date_joined date                  NOT NULL DEFAULT CURRENT_DATE,
+
+--  TODO: add ROLE column
+
+    bio         character varying(255)          DEFAULT '',
+    cover_pic   bytea                           DEFAULT NULL,
+    profile_pic bytea                           DEFAULT NULL,
+    first_name  character varying(40)  NOT NULL,
+    last_name   character varying(40)  NOT NULL,
+    date_joined date                   NOT NULL DEFAULT CURRENT_DATE,
     PRIMARY KEY (user_name)
 );
 
 CREATE TABLE following
 (
-    user_name    varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
-    following_id varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
-    PRIMARY KEY (following_id,
-                 user_name)
+    follower varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    followed varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    PRIMARY KEY (follower, followed)
 );
 
 CREATE TABLE mutes

@@ -20,6 +20,7 @@ public class BlocksServiceImpl implements BlocksService {
     private final UserService userService;
     private final FollowingService followService;
 
+    @Autowired
     public BlocksServiceImpl(BlocksRepository blocksRepository, UserService userService, FollowingService followService) {
         this.blocksRepository = blocksRepository;
         this.userService = userService;
@@ -73,6 +74,7 @@ public class BlocksServiceImpl implements BlocksService {
         if (!blocksRepository.existsById(new BlocksId(userName, whomIBlocked))) {
             return new Response(false, "User not blocked");
         }
+
         blocksRepository.deleteById(new BlocksId(userName, whomIBlocked));
         return new Response(true, "User unblocked successfully");
     }

@@ -2,9 +2,11 @@ package com.Twitter.org.controllers;
 
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Users.User;
-import com.Twitter.org.Models.dto.UserDto;
-import com.Twitter.org.mappers.Impl.UserMapper;
+import com.Twitter.org.Models.dto.UserDto.UserCreateDto;
+import com.Twitter.org.Models.dto.UserDto.UserResponseDto;
+import com.Twitter.org.mappers.Impl.UserMapper.UserResponseMapper;
 import com.Twitter.org.services.Blocks.BlocksService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +16,12 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/blocks")
 public class BlocksController {
-    private final UserMapper userMapper;
+    private final UserResponseMapper userResponseMapper;
     private final BlocksService blocksService;
 
-    public BlocksController(UserMapper userMapper, BlocksService blocksService) {
-        this.userMapper = userMapper;
+    @Autowired
+    public BlocksController(UserResponseMapper userResponseMapper, BlocksService blocksService) {
+        this.userResponseMapper = userResponseMapper;
         this.blocksService = blocksService;
     }
 
@@ -27,12 +30,12 @@ public class BlocksController {
     public ResponseEntity<Response> blockUser(@PathVariable String userName, @PathVariable String blockedId) {
         Response response = blocksService.blockUser(userName, blockedId);
         if (response.isSuccess()) {
-            UserDto userDto = (UserDto) response.getData();
-            response.setData(userDto);
+            UserCreateDto userCreateDto = (UserCreateDto) response.getData();
+            response.setData(userCreateDto);
             return ResponseEntity.ok(response);
         }
-        UserDto userDto = (UserDto) response.getData();
-        response.setData(userDto);
+        UserCreateDto userCreateDto = (UserCreateDto) response.getData();
+        response.setData(userCreateDto);
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -48,9 +51,9 @@ public class BlocksController {
 
     // Get list of blocked users by a user
     @GetMapping("/{userName}")
-    public List<UserDto> getBlockedUsers(@PathVariable String userName) {
+    public List<UserResponseDto> getBlockedUsers(@PathVariable String userName) {
         List<User> users = blocksService.getBlockedUsers(userName);
-        return users.stream().map(userMapper::mapTo).collect(Collectors.toList());
+        return users.stream().map(userResponseMapper::mapTo).collect(Collectors.toList());
     }
 
     // Count number of blocked users by a user

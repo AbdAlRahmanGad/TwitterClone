@@ -1,8 +1,8 @@
 package com.Twitter.org.controllers;
 
 import com.Twitter.org.Models.Users.User;
-import com.Twitter.org.Models.dto.UserDto;
-import com.Twitter.org.mappers.Impl.UserMapper;
+import com.Twitter.org.Models.dto.UserDto.UserCreateDto;
+import com.Twitter.org.mappers.Impl.UserMapper.UserCreateMapper;
 import com.Twitter.org.services.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,10 +15,10 @@ public class RegistrationController {
 
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
-    private final UserMapper userMapper;
+    private final UserCreateMapper userMapper;
 
     @Autowired
-    public RegistrationController(PasswordEncoder passwordEncoder, UserService userService, UserMapper userMapper) {
+    public RegistrationController(PasswordEncoder passwordEncoder, UserService userService, UserCreateMapper userMapper) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.userMapper = userMapper;
@@ -27,9 +27,9 @@ public class RegistrationController {
 
     // Register a new user
     @PostMapping("/register")
-    public UserDto registerUser(@RequestBody UserDto userDto) {
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        User user = userMapper.mapFrom(userDto);
+    public UserCreateDto registerUser(@RequestBody UserCreateDto userCreateDto) {
+        userCreateDto.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
+        User user = userMapper.mapFrom(userCreateDto);
         User savedUser = userService.save(user);
         return userMapper.mapTo(savedUser);
     }

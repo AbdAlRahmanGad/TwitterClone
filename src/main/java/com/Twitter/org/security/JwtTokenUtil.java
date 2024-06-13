@@ -16,13 +16,23 @@ import java.util.concurrent.TimeUnit;
 public class JwtTokenUtil {
 
     private static final String key = "A017033D90C074472B8BA35D813DCC509315C2158A889BAB9AC7DA91B9BF0C35BA8F607D8855DDCEB7DBC99034D8FC4A4B0551148A68C4914410D5800B3F5BE8";
-    private static final long VALIDITY = TimeUnit.MINUTES.toMillis(30);
+    private static final long ACCESS_TOKEN_VALIDITY = TimeUnit.MINUTES.toMillis(30);
+    private static final long REFRESH_TOKEN_VALIDITY = TimeUnit.DAYS.toMillis(7);
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateAccessToken(UserDetails userDetails) {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(Date.from(Instant.now()))
-                .expiration(Date.from(Instant.now().plusMillis(VALIDITY)))
+                .expiration(Date.from(Instant.now().plusMillis(ACCESS_TOKEN_VALIDITY)))
+                .signWith(generateKey())
+                .compact();
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        return Jwts.builder()
+                .subject(userDetails.getUsername())
+                .issuedAt(Date.from(Instant.now()))
+                .expiration(Date.from(Instant.now().plusMillis(REFRESH_TOKEN_VALIDITY)))
                 .signWith(generateKey())
                 .compact();
     }
@@ -49,6 +59,4 @@ public class JwtTokenUtil {
                 .parseSignedClaims(jwt)
                 .getPayload();
     }
-
-
 }

@@ -1,79 +1,115 @@
 package com.Twitter.org.services.Following;
 
 import com.Twitter.org.Models.Response;
+import com.Twitter.org.Models.Users.Following.Following;
+import com.Twitter.org.Models.Users.Following.FollowingId;
+import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Repository.FollowingRepository;
+import com.Twitter.org.Repository.UserRepository;
+import com.Twitter.org.services.Blocks.BlocksService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FollowingServiceImpl implements FollowingService {
+    private final FollowingRepository followingRepository;
+    private final UserRepository userRepository;
+    private final BlocksService blocksService;
 
-    FollowingRepository followingRepository;
-
-    public FollowingServiceImpl(FollowingRepository followingRepository) {
+    @Autowired
+    public FollowingServiceImpl(FollowingRepository followingRepository, UserRepository userRepository, @Lazy BlocksService blocksService) {
         this.followingRepository = followingRepository;
+        this.userRepository = userRepository;
+        this.blocksService = blocksService;
     }
 
     @Override
-    public List<String> findAllForUser(String username) {
-        return followingRepository.GetAllFollowing(username);
-    }
-
-    @Override
-    public Response addFollow(String username, String userToFollow) {
-
-        Response response = new Response();
-
-            // check if the user is already following the other user
-            if (username.equals(userToFollow)) {
-                response.setSuccess(false);
-                response.setMessage("Can't Follow youself");
-                return response;
-            }
-            if (followingRepository.isFollowing(username, userToFollow)) {
-                response.setSuccess(false);
-                response.setMessage("Already following " + userToFollow);
-                return response;
-            }
-
-            followingRepository.addFollower(username, userToFollow);
-
-            response.setMessage("Started following " + userToFollow + " successfully");
-            response.setSuccess(true);
-        return response;
-    }
-
-    @Override
-    public Response removeFollow(String username, String userToUnfollow) {
-
-        Response response = new Response();
-        if (username.equals(userToUnfollow)) {
-            response.setSuccess(false);
-            response.setMessage("Can't Unfollow youself");
-            return response;
+    public List<User> GetAllFollowing(String userName) {
+        User user = userRepository.findById(userName).orElse(null);
+        if (user != null) {
+            return user.getFollowing().stream().map(Following::getFollowed).collect(Collectors.toList());
         }
-        // check if the user is already following the other user
-        if (!followingRepository.isFollowing(username, userToUnfollow)) {
-            response.setSuccess(false);
-            response.setMessage("Already not following " + userToUnfollow);
-            return response;
+        return List.of();
+    }
+
+    @Override
+    public List<User> GetAllFollowers(String userName) {
+        User user = userRepository.findById(userName).orElse(null);
+        if (user != null) {
+            return user.getFollowers().stream().map(Following::getFollower).collect(Collectors.toList());
+        }
+        return List.of();
+    }
+
+    @Override
+    public boolean isFollowing(String userName, String userToFollow) {
+        User user = userRepository.findById(userName).orElse(null);
+        User followedUser = userRepository.findById(userToFollow).orElse(null);
+
+        if (user != null && followedUser != null && user != followedUser) {
+            String username = user.getUserName();
+            String followedUserUserName = followedUser.getUserName();
+            return followingRepository.findById(new FollowingId(username, followedUserUserName)).isPresent();
+        }
+        return false;
+    }
+
+    @Transactional
+    @Override
+    public Response addFollower(String userName, String userToFollow) {
+        User user = userRepository.findById(userName).orElse(null);
+        User followedUser = userRepository.findById(userToFollow).orElse(null);
+
+        // Check if already following
+        if (isFollowing(userName, userToFollow)) {
+            return new Response(false, "User already followed");
         }
 
-        followingRepository.removeFollow(username, userToUnfollow);
+        if (user != null && followedUser != null && !userName.equals(userToFollow)) {
 
-        response.setMessage("Unfollowed " + userToUnfollow + " successfully");
-        response.setSuccess(true);
-        return response;
+            // Can't follow if blocked
+            if (blocksService.isBlocked(userToFollow, userName)) {
+                return new Response(false, "You are blocked by this user");
+            }
+
+            Following following = new Following(user, followedUser);
+            followingRepository.save(following);
+            return new Response(true, "User followed successfully");
+        }
+        return new Response(false, "Action failed");
     }
 
     @Override
-    public List<String> findAllFollowers(String username) {
-        return followingRepository.GetAllFollowers(username);
+    public Response removeFollow(String userName, String userToFollow) {
+        User user = userRepository.findById(userName).orElse(null);
+        User followedUser = userRepository.findById(userToFollow).orElse(null);
+        if (user != null && followedUser != null && isFollowing(userName, userToFollow) && !userName.equals(userToFollow)) {
+            followingRepository.delete(new Following(user, followedUser));
+            return new Response(true, "User unfollowed successfully");
+        }
+        return new Response(false, "Action failed");
     }
 
     @Override
-    public boolean isFollowing(String username, String userToFollow) {
-        return followingRepository.isFollowing(username, userToFollow);
+    public Long countFollowers(String userName) {
+        User user = userRepository.findById(userName).orElse(null);
+        if (user != null) {
+            return (long) user.getFollowers().size();
+        }
+        return 0L;
+    }
+
+    @Override
+    public Long countFollowing(String userName) {
+        User user = userRepository.findById(userName).orElse(null);
+        if (user != null) {
+            return (long) user.getFollowing().size();
+        }
+        return 0L;
     }
 }

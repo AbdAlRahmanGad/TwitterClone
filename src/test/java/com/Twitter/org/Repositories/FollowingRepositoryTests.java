@@ -1,6 +1,6 @@
 //package com.Twitter.org.Repositories;
 //
-//import com.Twitter.org.Models.Users.Following;
+//import com.Twitter.org.Models.Users.Following.Following;
 //import com.Twitter.org.Models.Users.User;
 //import com.Twitter.org.Repository.FollowingRepository;
 //import com.Twitter.org.TestUtility;

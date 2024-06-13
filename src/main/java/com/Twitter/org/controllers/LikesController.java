@@ -3,8 +3,9 @@ package com.Twitter.org.controllers;
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto;
-import com.Twitter.org.Models.dto.UserDto;
+import com.Twitter.org.Models.dto.UserDto.UserResponseDto;
 import com.Twitter.org.mappers.Impl.TweetsMapper;
+import com.Twitter.org.mappers.Impl.UserMapper.UserResponseMapper;
 import com.Twitter.org.services.Likes.LikesService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,13 @@ public class LikesController {
 
     private final LikesService likesService;
     private final TweetsMapper tweetsMapper;
+    private final UserResponseMapper userResponseMapper;
 
 
-    public LikesController(LikesService likesService, TweetsMapper tweetsMapper) {
+    public LikesController(LikesService likesService, TweetsMapper tweetsMapper, UserResponseMapper userResponseMapper) {
         this.likesService = likesService;
         this.tweetsMapper = tweetsMapper;
+        this.userResponseMapper = userResponseMapper;
     }
 
 
@@ -75,10 +78,10 @@ public class LikesController {
 
     // Get all users who liked a tweet
     @GetMapping("/tweets/{tweetId}/likes/users")
-    public List<UserDto> getUsersWhoLikedTweet(@PathVariable int tweetId) {
-        List<UserDto> users;
+    public List<UserResponseDto> getUsersWhoLikedTweet(@PathVariable int tweetId) {
+        List<UserResponseDto> users;
         users = likesService.getUsersWhoLikedTweet(tweetId).stream()
-                .map(UserDto::new)
+                .map(userResponseMapper::mapTo)
                 .toList();
         return users;
     }
