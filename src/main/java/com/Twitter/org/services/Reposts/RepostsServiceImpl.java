@@ -1,13 +1,12 @@
 package com.Twitter.org.services.Reposts;
 
-import java.util.List;
-
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Repository.TweetsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -109,18 +108,25 @@ public class RepostsServiceImpl implements RepostsService {
         }
         return response;
     }
+
+    @Transactional
     @Override
-    public void deleteRepost(String username, int tweetId) {
-        Tweets tweet = tweetsRepository.findById(tweetId).get();
-        Tweets originalTweet = tweetsRepository.findById(tweet.getOriginalPost()).get();
-        originalTweet.setRepostNumber(originalTweet.getRepostNumber() - 1);
-        tweetsRepository.save(originalTweet);
-        tweetsRepository.deleteRepost(tweet.getOriginalPost(), username);
+    public boolean deleteRepost(String username, int tweetId) {
+        Optional<Tweets> tweetOptional = tweetsRepository.findById(tweetId);
+        if (tweetOptional.isPresent()) {
+            Tweets tweet = tweetOptional.get();
+            if (tweet.getRepost()) {
+                tweetsRepository.decrementRepostCount(tweet.getOriginalPost());
+                tweetsRepository.deleteRepost(tweet.getOriginalPost(), username);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean hasUserRepostedTweet(String username, int tweetId) {
-        return  tweetsRepository.hasUserRepostedTweet(tweetId, username) > 0;
+        return tweetsRepository.hasUserRepostedTweet(tweetId, username) > 0;
     }
 
     // This method updates the reposts counter for all tweets on startup

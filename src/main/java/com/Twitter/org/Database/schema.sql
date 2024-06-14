@@ -50,6 +50,9 @@ CREATE TABLE tweets
     is_repost        boolean      DEFAULT FALSE,
     is_comment       boolean      DEFAULT FALSE,
     original_post    integer      DEFAULT NULL REFERENCES tweets (id) ON DELETE CASCADE,
+
+--  TODO: reposted date column
+
     PRIMARY KEY (id)
 );
 CREATE TABLE likes

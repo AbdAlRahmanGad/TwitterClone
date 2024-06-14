@@ -16,7 +16,7 @@ public interface RepostsService {
     // quote a tweet
     Response quoteTweet(String username, int tweetId, String comment);
     // delete a repost
-    void deleteRepost(String username, int tweetId);
+    boolean deleteRepost(String username, int tweetId);
     // check if a user has reposted a tweet
     boolean hasUserRepostedTweet(String username, int tweetId);
 }
