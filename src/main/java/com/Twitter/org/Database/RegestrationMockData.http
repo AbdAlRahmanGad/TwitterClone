@@ -1,0 +1,80 @@
+### TODO(Change the profilePic and coverPic to make them work)
+###
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+  "userName": "user1",
+  "password": "testPass",
+  "firstName": "John",
+  "lastName": "Doe",
+  "bio": "Software engineer and dog lover",
+  "profilePic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "coverPic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "dateJoined": "2020-01-01"
+}
+
+
+###
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+  "userName": "user2",
+  "password": "testPass",
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "bio": "Data scientist and cat person",
+  "profilePic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "coverPic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "dateJoined": "2020-02-01"
+}
+
+
+###
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+  "userName": "user3",
+  "password": "testPass",
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "bio": "Machine learning researcher and bird watcher",
+  "profilePic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "coverPic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "dateJoined": "2020-03-01"
+}
+
+
+###
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+  "userName": "user4",
+  "password": "testPass",
+  "firstName": "Bob",
+  "lastName": "Smith",
+  "bio": "Web developer and plant enthusiast",
+  "profilePic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "coverPic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "dateJoined": "2020-04-01"
+}
+
+
+###
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+  "userName": "user5",
+  "password": "testPass",
+  "firstName": "Charlie",
+  "lastName": "Brown",
+  "bio": "Product manager and traveler",
+  "profilePic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "coverPic": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
+  "dateJoined": "2020-05-01"
+}
+
