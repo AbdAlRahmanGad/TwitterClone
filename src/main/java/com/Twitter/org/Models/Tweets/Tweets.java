@@ -16,8 +16,8 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "Tweets")
 public class Tweets {
@@ -31,7 +31,6 @@ public class Tweets {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_tweeted", insertable = false)
     private LocalDateTime dateTweeted;
-    // TODO do the same for every other date
 
     @Column(name = "author_id", nullable = false)
     private String authorId;
@@ -42,12 +41,10 @@ public class Tweets {
     @Column(name = "content")
     private String content;
 
-    //    @Type(type="org.hibernate.type.BinaryType")
     @JdbcType(VarbinaryJdbcType.class)
     @Column(name = "media")
     private byte[] media;
 
-    // TODO do the same for every other default value in other tables
     @Column(name = "bookmarks_number", insertable = false, columnDefinition = "integer default 0")
     private Integer bookmarksNumber;
 
@@ -69,15 +66,12 @@ public class Tweets {
     @Column(name = "original_post")
     private Integer originalPost;
 
-    // One to many with likes, One tweet can have many likes
     @OneToMany(mappedBy = "tweetId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Likes> likes;
 
-    // One to many with Bookmarks, One tweet can have many bookmarks
     @OneToMany(mappedBy = "tweetId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Bookmarks> bookmarks;
 
-    // One to many with Replies, One tweet can have many replies
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Replies> replies;
 }

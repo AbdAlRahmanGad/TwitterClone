@@ -13,6 +13,5 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class RepliesId implements Serializable {
     private Integer post;
-
     private Integer reply;
 }

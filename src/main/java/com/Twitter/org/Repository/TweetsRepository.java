@@ -4,7 +4,9 @@ import com.Twitter.org.Models.Tweets.Tweets;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,9 +19,9 @@ public interface TweetsRepository extends CrudRepository<Tweets, Integer> {
 
     // Get all tweets from people whom user follows, excluding muted users
     @Query(value = "SELECT t.* FROM tweets t " +
-                   "JOIN following f ON t.author_id = f.following_id " +
+                   "JOIN following f ON t.author_id = f.followed " +
                    "LEFT JOIN mutes m ON t.author_id = m.muted_id " +
-                   "WHERE f.user_name = ?1 AND (m.user_name IS NULL OR m.user_name != ?1)", nativeQuery = true)
+                   "WHERE f.follower = ?1 AND (m.user_name IS NULL OR m.user_name != ?1)", nativeQuery = true)
     List<Tweets> findAllTweetsFromFollowedUsersExcludingMuted(String username);
 
 
@@ -53,6 +55,11 @@ public interface TweetsRepository extends CrudRepository<Tweets, Integer> {
     @Modifying
     @Query(value = "DELETE FROM tweets WHERE parent_id = ?1 AND author_id = ?2", nativeQuery = true)
     void deleteRepost(int tweetId, String username);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Tweets t SET t.repostNumber = t.repostNumber - 1 WHERE t.id = :id")
+    void decrementRepostCount(@Param("id") Integer id);
 
 
 //    Tweets findByTweet(String tweet);

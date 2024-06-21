@@ -1,9 +1,9 @@
 package com.Twitter.org.initializer;
 
-import com.Twitter.org.services.Impl.BookmarksServiceImpl;
-import com.Twitter.org.services.Impl.LikesServiceImpl;
-import com.Twitter.org.services.Impl.RepliesServiceImpl;
-import com.Twitter.org.services.Impl.RepostsServiceImpl;
+import com.Twitter.org.services.Bookmarks.BookmarksServiceImpl;
+import com.Twitter.org.services.Likes.LikesServiceImpl;
+import com.Twitter.org.services.Replies.RepliesServiceImpl;
+import com.Twitter.org.services.Reposts.RepostsServiceImpl;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
