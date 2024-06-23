@@ -1,6 +1,6 @@
 CREATE TABLE twitter_user
 (
-    user_name   character varying(32)  NOT NULL,
+    user_name   character varying(32)  NOT NULL UNIQUE,
     password    character varying(255) NOT NULL,
     bio         character varying(255)          DEFAULT '',
     cover_pic   bytea                           DEFAULT NULL,
@@ -11,11 +11,24 @@ CREATE TABLE twitter_user
     PRIMARY KEY (user_name)
 );
 
+CREATE TABLE roles
+(
+    id        serial PRIMARY KEY,
+    role_name varchar(32) NOT NULL UNIQUE
+);
+
+CREATE TABLE user_roles
+(
+    user_name varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    role_id   integer     NOT NULL REFERENCES roles (id) ON DELETE CASCADE,
+    PRIMARY KEY (user_name, role_id)
+);
+
 CREATE TABLE following
 (
     follower             varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
     followed             varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
-    following_start_date timestamp NOT NULL,
+    following_start_date timestamp   NOT NULL,
     PRIMARY KEY (follower, followed)
 );
 
@@ -73,11 +86,6 @@ CREATE TABLE bookmarks
     PRIMARY KEY (tweet_id,
                  username)
 );
-
--- TODO: Usernames Uniqueness:
--- ALTER TABLE twitter_user ADD CONSTRAINT unique_username UNIQUE (user_name);
-
------------------
 
 -- TODO: Indexes:
 -- CREATE INDEX idx_author_id ON tweets(author_id);

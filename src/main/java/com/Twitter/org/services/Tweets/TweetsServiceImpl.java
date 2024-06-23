@@ -2,6 +2,8 @@ package com.Twitter.org.services.Tweets;
 
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Repository.TweetsRepository;
+import com.Twitter.org.services.Authentication.AuthenticationService;
+import com.Twitter.org.services.Blocks.BlocksService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,16 +11,29 @@ import java.util.List;
 @Service
 public class TweetsServiceImpl implements TweetsService {
 
-    final TweetsRepository tweetsRepository;
+    private final TweetsRepository tweetsRepository;
+    private final BlocksService blocksService;
+    private final AuthenticationService authenticationService;
 
-    public TweetsServiceImpl(TweetsRepository tweetsRepository) {
+
+    public TweetsServiceImpl(TweetsRepository tweetsRepository, BlocksService blocksService, AuthenticationService authenticationService) {
         this.tweetsRepository = tweetsRepository;
+        this.blocksService = blocksService;
+        this.authenticationService = authenticationService;
     }
 
 
     @Override
     public Tweets getTweetById(int tweetId) {
-        return tweetsRepository.findById(tweetId).orElse(null);
+        String authenticatedUsername = authenticationService.getAuthenticatedUsername();
+        Tweets tweet = tweetsRepository.findById(tweetId).orElse(null);
+        if (tweet == null) {
+            return null;
+        }
+        if (blocksService.isBlocked(tweet.getAuthorId(), authenticatedUsername)) {
+            return null;
+        }
+        return tweet;
     }
 
     @Override
@@ -40,6 +55,11 @@ public class TweetsServiceImpl implements TweetsService {
     // Get all tweets created by a user
     @Override
     public List<Tweets> GetAllTweetsByUser(String username) {
+        // the authenticated must not be blocked by the user
+        String authenticatedUsername = authenticationService.getAuthenticatedUsername();
+        if (blocksService.isBlocked(username, authenticatedUsername)) {
+            return null;
+        }
         return tweetsRepository.findByAuthorId(username);
 
     }

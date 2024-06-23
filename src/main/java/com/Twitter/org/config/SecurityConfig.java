@@ -35,7 +35,7 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/home", "/register", "/authenticate", "/refresh-token","/api-docs","/swagger-ui/**").permitAll();
+                    registry.requestMatchers("/home", "/register", "/authenticate", "/refresh-token", "/api-docs", "/swagger-ui/**").permitAll();
                     registry.anyRequest().authenticated();
                 })
                 .formLogin(formLogin -> formLogin
@@ -58,12 +58,10 @@ public class SecurityConfig {
         return provider;
     }
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     private AuthenticationSuccessHandler authenticationSuccessHandler() {
         return (request, response, authentication) -> {
