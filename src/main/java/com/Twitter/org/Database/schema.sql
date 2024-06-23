@@ -13,8 +13,9 @@ CREATE TABLE twitter_user
 
 CREATE TABLE following
 (
-    follower varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
-    followed varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    follower             varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    followed             varchar(32) NOT NULL REFERENCES twitter_user (user_name) ON DELETE CASCADE,
+    following_start_date timestamp NOT NULL,
     PRIMARY KEY (follower, followed)
 );
 
@@ -125,8 +126,3 @@ CREATE TABLE bookmarks
 -- );
 
 -- Then, remove bookmarks_number, replies_number, repost_number, likes_number from tweets table
-
------------------
-
--- TODO: Add Following date to the following table
--- ALTER TABLE following ADD COLUMN date_followed TIMESTAMP DEFAULT LOCALTIMESTAMP(0);
