@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FollowingMapper implements Mapper<Following, FollowingDto> {
-
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public FollowingMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
