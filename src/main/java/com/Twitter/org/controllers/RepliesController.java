@@ -3,7 +3,7 @@ package com.Twitter.org.controllers;
 import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto.TweetsCreateDto;
-import com.Twitter.org.mappers.Mapper;
+import com.Twitter.org.services.Authentication.AuthenticationService;
 import com.Twitter.org.services.Replies.RepliesService;
 import com.Twitter.org.services.Tweets.TweetsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,9 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Replies", description = "Replies operations")
@@ -25,27 +22,14 @@ import org.springframework.web.bind.annotation.*;
 public class RepliesController {
 
     private final RepliesService repliesService;
-    private final Mapper<Tweets, TweetsCreateDto> tweetsMapper;
     private final TweetsService tweetsService;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public RepliesController(RepliesService repliesService, Mapper<Tweets, TweetsCreateDto> tweetsMapper, TweetsService tweetsService) {
+    public RepliesController(RepliesService repliesService, TweetsService tweetsService, AuthenticationService authenticationService) {
         this.repliesService = repliesService;
-        this.tweetsMapper = tweetsMapper;
         this.tweetsService = tweetsService;
-    }
-
-    @Nullable
-    private static ResponseEntity<?> GetUserDetailsResponse(String userName) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String authUserName = userDetails.getUsername();
-        boolean isAdmin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        // If the user is not authenticated or not an admin
-        if (!authUserName.equals(userName) && !isAdmin) {
-            return new ResponseEntity<>("Unauthorized or Unauthenticated", HttpStatus.UNAUTHORIZED);
-        }
-        return null;
+        this.authenticationService = authenticationService;
     }
 
     @Contract(pure = true)
@@ -66,11 +50,10 @@ public class RepliesController {
     @Operation(summary = "Comment on a tweet")
     @PostMapping("/create")
     public ResponseEntity<?> comment(@RequestBody TweetsCreateDto commentTweet) {
-        final ResponseEntity<?> Unauthorized_or_Unauthenticated = GetUserDetailsResponse(getTweetAuthorUsername(commentTweet));
-        if (Unauthorized_or_Unauthenticated != null) return Unauthorized_or_Unauthenticated;
-
-        System.out.println("Comment Author = " + getTweetAuthorUsername(commentTweet));
-        System.out.println("Authenticated User = " + ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(getTweetAuthorUsername(commentTweet));
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
+        }
 
         Response response = repliesService.comment(commentTweet);
         if (response.isSuccess()) {
@@ -85,11 +68,14 @@ public class RepliesController {
     @Operation(summary = "Delete a comment")
     @DeleteMapping("/{replayId}")
     public ResponseEntity<?> deleteComment(@PathVariable int replayId) {
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(getTweetAuthorUsername(replayId));
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
+        }
+
         String tweetAuthorUsername = getTweetAuthorUsername(replayId);
         if (tweetAuthorUsername == null)
             return ResponseEntity.badRequest().body("The tweet does not exist or is not a valid tweet!");
-        final ResponseEntity<?> Unauthorized_or_Unauthenticated = GetUserDetailsResponse(getTweetAuthorUsername(replayId));
-        if (Unauthorized_or_Unauthenticated != null) return Unauthorized_or_Unauthenticated;
 
         Response response = repliesService.deleteComment(replayId);
         if (response.isSuccess()) {
@@ -104,11 +90,12 @@ public class RepliesController {
     @Operation(summary = "Count the number of replies on a tweet")
     @GetMapping("/count/{tweetId}")
     public ResponseEntity<?> countReplies(@PathVariable int tweetId) {
-        // Any Authenticated user can view the number of replies
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication.getPrincipal().equals("anonymousUser")) {
-            return new ResponseEntity<>("Unauthorized or Unauthenticated", HttpStatus.UNAUTHORIZED);
+        boolean authenticated = authenticationService.getAuthenticatedUsername() != null;
+
+        if (!authenticated) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized or Unauthenticated");
         }
+
         int count = repliesService.countReplies(tweetId);
         return ResponseEntity.ok(count);
     }

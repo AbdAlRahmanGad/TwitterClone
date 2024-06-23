@@ -6,12 +6,12 @@ import com.Twitter.org.Models.dto.TweetsDto.TweetsDetailsDto;
 import com.Twitter.org.Models.dto.UserDto.UserResponseDto;
 import com.Twitter.org.mappers.Impl.UserMapper.UserResponseMapper;
 import com.Twitter.org.mappers.Mapper;
+import com.Twitter.org.services.Authentication.AuthenticationService;
 import com.Twitter.org.services.Likes.LikesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,25 +22,15 @@ public class LikesController {
 
     private final LikesService likesService;
     private final UserResponseMapper userResponseMapper;
+    private final AuthenticationService authenticationService;
     private final Mapper<Tweets, TweetsDetailsDto> TweetsDetailsDtoMapper;
 
 
-    public LikesController(LikesService likesService, UserResponseMapper userResponseMapper, Mapper<Tweets, TweetsDetailsDto> tweetsDetailsDtoMapper) {
+    public LikesController(LikesService likesService, UserResponseMapper userResponseMapper, AuthenticationService authenticationService, Mapper<Tweets, TweetsDetailsDto> tweetsDetailsDtoMapper) {
         this.likesService = likesService;
         this.userResponseMapper = userResponseMapper;
+        this.authenticationService = authenticationService;
         TweetsDetailsDtoMapper = tweetsDetailsDtoMapper;
-    }
-
-    private static ResponseEntity<?> GetUserDetailsResponse(String userName) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String authUserName = userDetails.getUsername();
-        boolean isAdmin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        // If the user is not authenticated or not an admin
-        if (!authUserName.equals(userName) && !isAdmin) {
-            return ResponseEntity.status(401).body("Unauthorized or Unauthenticated");
-        }
-        return null;
     }
 
 
@@ -48,8 +38,10 @@ public class LikesController {
     @Operation(summary = "Like a tweet")
     @PostMapping("/{username}/tweets/{tweetId}/likes")
     public ResponseEntity<?> likeTweet(@PathVariable String username, @PathVariable int tweetId) {
-        final ResponseEntity<?> Unauthorized_or_Unauthenticated = GetUserDetailsResponse(username);
-        if (Unauthorized_or_Unauthenticated != null) return Unauthorized_or_Unauthenticated;
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
+        }
 
         Response response = likesService.addLike(username, tweetId);
         if (response.isSuccess()) {
@@ -66,8 +58,10 @@ public class LikesController {
     @Operation(summary = "Delete a like on a tweet")
     @DeleteMapping("/{username}/tweets/{tweetId}/likes")
     public ResponseEntity<?> unlikeTweet(@PathVariable String username, @PathVariable int tweetId) {
-        final ResponseEntity<?> Unauthorized_or_Unauthenticated = GetUserDetailsResponse(username);
-        if (Unauthorized_or_Unauthenticated != null) return Unauthorized_or_Unauthenticated;
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
+        }
 
 
         Response response = likesService.removeLike(username, tweetId);

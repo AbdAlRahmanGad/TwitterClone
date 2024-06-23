@@ -1,11 +1,12 @@
 package com.Twitter.org.services.Likes;
 
-import com.Twitter.org.Models.Tweets.Likes.Likes;
 import com.Twitter.org.Models.Response;
+import com.Twitter.org.Models.Tweets.Likes.Likes;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Repository.LikesRepository;
 import com.Twitter.org.Repository.TweetsRepository;
+import com.Twitter.org.services.Blocks.BlocksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +18,13 @@ import java.util.Optional;
 public class LikesServiceImpl implements LikesService {
     private final LikesRepository likesRepository;
     private final TweetsRepository tweetsRepository;
+    private final BlocksService blocksService;
 
     @Autowired
-    public LikesServiceImpl(LikesRepository likesRepository, TweetsRepository tweetsRepository) {
+    public LikesServiceImpl(LikesRepository likesRepository, TweetsRepository tweetsRepository, BlocksService blocksService) {
         this.likesRepository = likesRepository;
         this.tweetsRepository = tweetsRepository;
+        this.blocksService = blocksService;
     }
 
     // Add like to a tweet
@@ -34,13 +37,20 @@ public class LikesServiceImpl implements LikesService {
         Response response = new Response();
         // if tweet is present
         if (tweet.isPresent()) {
+            // user must not be blocked by the tweet author and vice versa
+            String tweetAuthor = tweet.get().getAuthorId();
+            if (blocksService.isBlocked(tweetAuthor, username) || blocksService.isBlocked(username, tweetAuthor)) {
+                response.setSuccess(false);
+                response.setMessage("Unauthorized");
+                return response;
+            }
+
             // check if the tweet is already liked
             if (likesRepository.findByUsernameAndTweetId(username, tweetId) != null) {
                 response.setSuccess(false);
                 response.setMessage("Tweet already liked");
                 return response;
             }
-
 
             // create a new like
             Likes like = new Likes();

@@ -4,13 +4,12 @@ import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Tweets.Tweets;
 import com.Twitter.org.Models.dto.TweetsDto.TweetsDetailsDto;
 import com.Twitter.org.mappers.Mapper;
+import com.Twitter.org.services.Authentication.AuthenticationService;
 import com.Twitter.org.services.Bookmarks.BookmarksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,30 +19,23 @@ import java.util.List;
 public class BookmarksController {
     private final BookmarksService bookmarksService;
     private final Mapper<Tweets, TweetsDetailsDto> tweetsDetailsDtoMapper;
+    private final AuthenticationService authenticationService;
 
-    public BookmarksController(BookmarksService bookmarksService, Mapper<Tweets, TweetsDetailsDto> tweetsDetailsDtoMapper) {
+    public BookmarksController(BookmarksService bookmarksService, Mapper<Tweets, TweetsDetailsDto> tweetsDetailsDtoMapper, AuthenticationService authenticationService) {
         this.bookmarksService = bookmarksService;
         this.tweetsDetailsDtoMapper = tweetsDetailsDtoMapper;
+        this.authenticationService = authenticationService;
     }
 
-    private static ResponseEntity<?> GetUserDetailsResponse(String userName) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String authUserName = userDetails.getUsername();
-        boolean isAdmin = userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        // If the user is not authenticated or not an admin
-        if (!authUserName.equals(userName) && !isAdmin) {
-            return new ResponseEntity<>("Unauthorized or Unauthenticated", HttpStatus.UNAUTHORIZED);
-        }
-        return null;
-    }
 
     // User bookmarks a tweet
     @Operation(summary = "Bookmark a tweet")
     @PostMapping("/{username}/bookmarks/{tweetId}")
     public ResponseEntity<?> bookmarkTweet(@PathVariable String username, @PathVariable int tweetId) {
-        final ResponseEntity<?> Unauthorized_or_Unauthenticated = GetUserDetailsResponse(username);
-        if (Unauthorized_or_Unauthenticated != null) return Unauthorized_or_Unauthenticated;
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
+        }
 
         Response response = bookmarksService.addBookmark(username, tweetId);
         if (response.isSuccess()) {
@@ -58,8 +50,10 @@ public class BookmarksController {
     @Operation(summary = "Delete bookmark")
     @DeleteMapping("/{username}/bookmarks/{tweetId}")
     public ResponseEntity<?> unbookmarkTweet(@PathVariable String username, @PathVariable int tweetId) {
-        final ResponseEntity<?> Unauthorized_or_Unauthenticated = GetUserDetailsResponse(username);
-        if (Unauthorized_or_Unauthenticated != null) return Unauthorized_or_Unauthenticated;
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
+        }
 
         Response response = bookmarksService.removeBookmark(username, tweetId);
         if (response.isSuccess()) {
@@ -74,8 +68,10 @@ public class BookmarksController {
     @Operation(summary = "Check user bookmarked a tweet")
     @GetMapping("/{username}/bookmarks/{tweetId}")
     public ResponseEntity<?> isBookmarked(@PathVariable String username, @PathVariable int tweetId) {
-        final ResponseEntity<?> Unauthorized_or_Unauthenticated = GetUserDetailsResponse(username);
-        if (Unauthorized_or_Unauthenticated != null) return Unauthorized_or_Unauthenticated;
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
+        }
         boolean isBookmarked = bookmarksService.isBookmarked(username, tweetId);
         return ResponseEntity.ok(isBookmarked);
     }
@@ -91,8 +87,10 @@ public class BookmarksController {
     @Operation(summary = "Get user's bookmarks")
     @GetMapping("/{username}/bookmarks/tweets")
     public ResponseEntity<?> getBookmarkedTweets(@PathVariable String username) {
-        final ResponseEntity<?> Unauthorized_or_Unauthenticated = GetUserDetailsResponse(username);
-        if (Unauthorized_or_Unauthenticated != null) return Unauthorized_or_Unauthenticated;
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
+        }
 
         List<Tweets> bookmarkedTweets = bookmarksService.getBookmarks(username);
         List<TweetsDetailsDto> bookmarkedTweetsDtos;

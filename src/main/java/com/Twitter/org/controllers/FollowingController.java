@@ -4,55 +4,44 @@ import com.Twitter.org.Models.Response;
 import com.Twitter.org.Models.Users.User;
 import com.Twitter.org.Models.dto.UserDto.UserResponseDto;
 import com.Twitter.org.mappers.Impl.UserMapper.UserResponseMapper;
-import com.Twitter.org.services.Blocks.BlocksService;
+import com.Twitter.org.services.Authentication.AuthenticationService;
 import com.Twitter.org.services.Following.FollowingService;
 import com.Twitter.org.services.Following.FollowingServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@Tag(name = "Following", description = "Following operations")
 public class FollowingController {
 
     private final FollowingService followingService;
-    private final BlocksService blocksService;
     private final UserResponseMapper userResponseMapper;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public FollowingController(FollowingServiceImpl followingService, BlocksService blocksService, UserResponseMapper userResponseMapper) {
+    public FollowingController(FollowingServiceImpl followingService, UserResponseMapper userResponseMapper, AuthenticationService authenticationService) {
         this.followingService = followingService;
-        this.blocksService = blocksService;
         this.userResponseMapper = userResponseMapper;
+        this.authenticationService = authenticationService;
     }
 
+    @Operation(summary = "List all users that a user is following")
     @GetMapping(path = "/{username}/following")
     public ResponseEntity<?> listFollowings(@PathVariable("username") String username) {
-        // To get the following list of a user
-        // -> the authenticated user must not be blocked by the user(username)
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!authentication.isAuthenticated()) {
-            return ResponseEntity.badRequest()
-                    .body(new Response(false, "User not authenticated"));
-        }
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String authenticatedUsername = userDetails.getUsername();
-
-        if (blocksService.isBlocked(username, authenticatedUsername)) {
-            return ResponseEntity.badRequest()
-                    .body(new Response(false, "You are blocked by this user"));
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
         }
 
         List<User> followingUsers = followingService.GetAllFollowing(username);
 
-        // Convert the list of users to a list of UserResponseDto
         List<UserResponseDto> userResponseDtos = new ArrayList<>();
         for (User followingUser : followingUsers) {
             userResponseDtos.add(userResponseMapper.mapTo(followingUser));
@@ -62,30 +51,16 @@ public class FollowingController {
     }
 
     // Endpoint to list all followers of a user
+    @Operation(summary = "List all followers of a user")
     @GetMapping(path = "/{username}/followers")
     public ResponseEntity<?> listFollowers(@PathVariable("username") String username) {
-        // To get the followers list of a user
-        // 1. Must be Authenticated
-        // 2. Must not be blocked by the user(username)
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!authentication.isAuthenticated()) {
-            return ResponseEntity.badRequest()
-                    .body(new Response(false, "User not authenticated"));
-
-        }
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String authenticatedUsername = userDetails.getUsername();
-
-        if (blocksService.isBlocked(username, authenticatedUsername)) {
-            return ResponseEntity.badRequest()
-                    .body(new Response(false, "You are blocked by this user"));
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
         }
 
         List<User> followers = followingService.GetAllFollowers(username);
 
-        // Convert the list of users to a list of UserResponseDto
         List<UserResponseDto> userResponseDtos = new ArrayList<>();
         for (User follower : followers) {
             userResponseDtos.add(userResponseMapper.mapTo(follower));
@@ -95,36 +70,23 @@ public class FollowingController {
     }
 
     // Endpoint to check if a user is following another user
+    @Operation(summary = "Check if a user is following another user")
     @GetMapping(path = "/{username}/isFollowing/{userToCheck}")
     public boolean isFollowing(@PathVariable("username") String username, @PathVariable("userToCheck") String userToCheck) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!authentication.isAuthenticated()) {
-            return false;
-        }
         return followingService.isFollowing(username, userToCheck);
     }
 
+    @Operation(summary = "Delete a user from following list")
     @DeleteMapping(path = "/{username}/deleteFollowing/{userToRemoveFollowing}")
-    public ResponseEntity<Response> deleteFollowing(@PathVariable("username") String username, @PathVariable("userToRemoveFollowing") String userToRemoveFollowing) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!authentication.isAuthenticated()) {
-            return ResponseEntity.badRequest()
-                    .body(new Response(false, "User not authenticated"));
-        }
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String authenticatedUsername = userDetails.getUsername();
-
-        // The {username} must be the authenticated user
-        if (!authenticatedUsername.equals(username)) {
-            return ResponseEntity.badRequest()
-                    .body(new Response(false, "You are not authorized to perform this action"));
+    public ResponseEntity<?> deleteFollowing(@PathVariable("username") String username, @PathVariable("userToRemoveFollowing") String userToRemoveFollowing) {
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
         }
 
         Response response = followingService.removeFollow(username, userToRemoveFollowing);
 
         if (response.isSuccess()) {
-            response.setData("success");
             return ResponseEntity.ok(response);
         }
 
@@ -132,27 +94,17 @@ public class FollowingController {
     }
 
     // Follow a user
+    @Operation(summary = "Add a user to following list")
     @PostMapping(path = "/{username}/addFollowing/{userToAddFollowing}")
-    public ResponseEntity<Response> createFollowing(@PathVariable("username") String username, @PathVariable("userToAddFollowing") String userToAddFollowing) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!authentication.isAuthenticated()) {
-            return ResponseEntity.badRequest()
-                    .body(new Response(false, "User not authenticated"));
-        }
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String authenticatedUsername = userDetails.getUsername();
-
-        // The {username} must be the authenticated user
-        if (!authenticatedUsername.equals(username)) {
-            return ResponseEntity.badRequest()
-                    .body(new Response(false, "You are not authorized to perform this action"));
+    public ResponseEntity<?> createFollowing(@PathVariable("username") String username, @PathVariable("userToAddFollowing") String userToAddFollowing) {
+        final ResponseEntity<?> Unauthorized_or_Unauthenticated = authenticationService.sameUserOrAdminAuthenticated(username);
+        if (Unauthorized_or_Unauthenticated.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+            return Unauthorized_or_Unauthenticated;
         }
 
         Response response = followingService.addFollower(username, userToAddFollowing);
 
         if (response.isSuccess()) {
-            response.setData("success");
             return ResponseEntity.ok(response);
         }
 
@@ -160,12 +112,14 @@ public class FollowingController {
     }
 
     // Count the number of followers of a user
+    @Operation(summary = "Count followers of a user")
     @GetMapping(path = "/{username}/countFollowers")
     public ResponseEntity<Long> countFollowers(@PathVariable("username") String username) {
         return ResponseEntity.ok(followingService.countFollowers(username));
     }
 
     // Count the number of users a user is following
+    @Operation(summary = "Count following of a user")
     @GetMapping(path = "/{username}/countFollowing")
     public ResponseEntity<Long> countFollowing(@PathVariable("username") String username) {
         return ResponseEntity.ok(followingService.countFollowing(username));

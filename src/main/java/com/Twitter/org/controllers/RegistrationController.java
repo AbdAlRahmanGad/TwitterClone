@@ -5,6 +5,7 @@ import com.Twitter.org.Models.dto.UserDto.UserCreateDto;
 import com.Twitter.org.mappers.Impl.UserMapper.UserCreateMapper;
 import com.Twitter.org.services.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,10 +28,15 @@ public class RegistrationController {
 
     // Register a new user
     @PostMapping("/register")
-    public UserCreateDto registerUser(@RequestBody UserCreateDto userCreateDto) {
+    public ResponseEntity<?> registerUser(@RequestBody UserCreateDto userCreateDto) {
+        // Check if the username is already taken
+        if (userService.findUserByUsername(userCreateDto.getUserName()) != null) {
+            return ResponseEntity.badRequest().body("Username is already taken");
+        }
+
         userCreateDto.setPassword(passwordEncoder.encode(userCreateDto.getPassword()));
         User user = userMapper.mapFrom(userCreateDto);
         User savedUser = userService.save(user);
-        return userMapper.mapTo(savedUser);
+        return ResponseEntity.ok(userCreateDto);
     }
 }

@@ -2,6 +2,7 @@ package com.Twitter.org.Models.Users;
 
 import com.Twitter.org.Models.Users.Blocks.Blocks;
 import com.Twitter.org.Models.Users.Following.Following;
+import com.Twitter.org.Models.Users.Roles.Role;
 import com.Twitter.org.Models.dto.UserDto.UserCreateDto;
 import com.Twitter.org.Models.dto.UserDto.UserResponseDto;
 import com.Twitter.org.Models.dto.UserDto.UserUpdateDto;
@@ -15,7 +16,9 @@ import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 //@JdbcTypeCode(Types.VARBINARY)
 @Data
@@ -66,6 +69,13 @@ public class User {
     @OneToMany(mappedBy = "blocked", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Blocks> blockedByUsers = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_name"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public User(UserCreateDto userCreateDto) {
         this.userName = userCreateDto.getUserName();
